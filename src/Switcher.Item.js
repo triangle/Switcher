@@ -1,18 +1,22 @@
-Switcher.Item = function(element, switcher){
-	this._element = element;
-	this._switcher = switcher;
-	this._selectedClass = this._switcher.options.selectedClass;
+Switcher.Item = function(options){
+	this._element = $(options.element);
+	this._switcher = options.switcher;
+	
+	this.options = options.itemsOptions;
+	
+	this._selectedClass = options.itemsOptions.selectedClass;
 	
 	this._setValue();
 	this._attachEvents();
+	
 }
 
 Switcher.Item.prototype = {
 	_setValue: function(){
 		this._valueElevemt = this._element;
 		
-		if (this._switcher.options.itemValueAttribute == "class") {
-			this._value = Switcher.utils.getSuffixClass(this._element, this._switcher.options.itemValuePrefix);
+		if (this.options.valueAttribute == "class") {
+			this._value = Switcher.utils.getSuffixClass(this._element, this.options.valuePrefix);
 		}
 	},
 	_attachEvents: function(){

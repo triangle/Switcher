@@ -10,10 +10,12 @@
 			$(function(){
 				oSimpleSwitcher = new Switcher.Simple({
 					container: '.switcher',
-					itemSelector: '.switcher-item',
-					itemValueAttribute: 'class',
-					itemValuePrefix: 'value_',
-					selectedClass: 'switcher-item_selected'
+					items: {
+						selector: '.switcher-item',
+						selectedClass: 'switcher-item_selected',
+						valueAttribute: 'class',
+						valuePrefix: 'value_'
+					}
 				})
 			});
 		</script>

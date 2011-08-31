@@ -11,8 +11,12 @@ Switcher.Simple.prototype = {
 		var oThis = this;
 		this.items = [];
 		
-		this.container.find(this.options.itemSelector).each(function(){
-			var newItem = new Switcher.Item($(this), oThis);
+		this.container.find(this.options.items.selector).each(function(){
+			var newItem = new Switcher.Item({
+				element: this,
+				switcher: oThis,
+				itemsOptions: oThis.options.items
+			});
 			oThis.items.push(newItem);
 			
 			if (!oThis.selectedItem && newItem.isSelected()){
