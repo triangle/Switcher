@@ -37,6 +37,10 @@ Switcher.Simple.prototype = {
 		}
 		this.selectedItem  = item;
 		this.selectedValue = item._value;
+		
+		if (this.selectCallback) {
+			this.selectCallback({ value: this.selectedValue });
+		}
 	},
 	_clearSelectedItem: function(item){
 		if (this.selectedItem) {
