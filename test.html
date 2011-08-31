@@ -11,6 +11,8 @@
 				oSimpleSwitcher = new Switcher.Simple({
 					container: '.switcher',
 					itemSelector: '.switcher-item',
+					itemValueAttribute: 'class',
+					itemValuePrefix: 'value_',
 					selectedClass: 'switcher-item_selected'
 				})
 			});
@@ -35,13 +37,13 @@
 	</head>
 	<body>
 	<span class="switcher">
-		<span class="switcher-item switcher-item_selected">
+		<span class="switcher-item switcher-item_selected value_1">
 			<span class="pseudo">Все</span>
 		</span>
-		<span class="switcher-item">
+		<span class="switcher-item value_2">
 			<span class="pseudo">Уже использовались</span>
 		</span>
-		<span class="switcher-item">
+		<span class="switcher-item value_3">
 			<span class="pseudo">Рекомендуемые</span>
 		</span>
 	</span>
