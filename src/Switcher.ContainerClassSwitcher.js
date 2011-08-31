@@ -1,6 +1,8 @@
 Switcher.ContainerClassSwitcher = function(options){
 	Switcher.ContainerClassSwitcher.superClass.constructor.call(this, options);
 	
+	this.options.controlledItems.classPrefix = this.options.controlledItems.classPrefix || '';
+	
 	this._slavesContainer = $(this.options.controlledItems.container);
 }
 Switcher.utils.extend(Switcher.ContainerClassSwitcher, Switcher.Simple);
