@@ -15,6 +15,10 @@
 						selectedClass: 'switcher-item_selected',
 						valueAttribute: 'class',
 						valuePrefix: 'value_'
+					},
+					selectCallback: function(data){
+						console.log(this);
+						$("#value-display").html(data.value);
 					}
 				})
 			});
@@ -49,5 +53,7 @@
 			<span class="pseudo">Рекомендуемые</span>
 		</span>
 	</span>
+	
+	<p>Your value is: <span id="value-display"></span></p>
 </body>
 </html>

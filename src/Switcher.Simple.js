@@ -4,6 +4,7 @@ Switcher.Simple = function(options){
 	this.container = $(this.options.container);
 	
 	this._findItems();
+	this._attachCallback();
 }
 
 Switcher.Simple.prototype = {
@@ -23,6 +24,11 @@ Switcher.Simple.prototype = {
 				oThis.selectedItem = newItem;
 			} 
 		});
+	},
+	_attachCallback: function(){
+		if (this.options.selectCallback && typeof this.options.selectCallback === 'function') {
+			this.selectCallback = this.options.selectCallback;
+		}
 	},
 
 	deselectSelectedItem: function(){
