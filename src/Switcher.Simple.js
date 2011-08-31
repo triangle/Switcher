@@ -38,9 +38,7 @@ Switcher.Simple.prototype = {
 		this.selectedItem  = item;
 		this.selectedValue = item._value;
 		
-		if (this.selectCallback) {
-			this.selectCallback({ value: this.selectedValue });
-		}
+		this._invokeCallbacks();
 	},
 	_clearSelectedItem: function(item){
 		if (this.selectedItem) {
@@ -49,6 +47,11 @@ Switcher.Simple.prototype = {
 		}
 		this.selectedItem  = null;
 		this.selectedValue = null
+	},
+	_invokeCallbacks: function(){
+		if (this.selectCallback) {
+			this.selectCallback({ value: this.selectedValue });
+		}		
 	},
 
 	deselectSelectedItem: function(){
