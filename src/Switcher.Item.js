@@ -1,6 +1,6 @@
 Switcher.Item = function(options){
 	this._element = $(options.element);
-	this._switcher = options.switcher;
+	this.switcher = options.switcher;
 	
 	this.options = options.itemsOptions;
 	
@@ -26,20 +26,20 @@ Switcher.Item.prototype = {
 	click: function(event){
 		if (this.isSelected()) return;
 		
-		this._switcher.deselectSelectedItem();
+		this.switcher.deselectSelectedItem();
 		this.select();
 	},
 	select: function(){
 		this._element.addClass(this._selectedClass);
-		this._switcher.selectedItem = this;
+		this.switcher.selectedItem = this;
 		
-		if (this._switcher.selectCallback) {
-			this._switcher.selectCallback({ value: this._value });
+		if (this.switcher.selectCallback) {
+			this.switcher.selectCallback({ value: this._value });
 		}
 	},
 	deselect: function(){
 		this._element.removeClass(this._selectedClass);
-		this._switcher.selectedItem = null;
+		this.switcher.selectedItem = null;
 	},
 
 	isSelected: function(){
