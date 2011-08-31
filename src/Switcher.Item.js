@@ -31,7 +31,7 @@ Switcher.Item.prototype = {
 	},
 	select: function(){
 		this._element.addClass(this._selectedClass);
-		this.switcher.selectedItem = this;
+		this.switcher._setSelectedItem(this);
 		
 		if (this.switcher.selectCallback) {
 			this.switcher.selectCallback({ value: this._value });

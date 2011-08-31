@@ -30,6 +30,14 @@ Switcher.Simple.prototype = {
 			this.selectCallback = this.options.selectCallback;
 		}
 	},
+	_setSelectedItem: function(item){
+		if (this.selectedItem) {
+			this.prevSelectedItem  = this.selectedItem;
+			this.prevSelectedValue = this.selectedItem._value;
+		}
+		this.selectedItem  = item;
+		this.selectedValue = item.value
+	},
 
 	deselectSelectedItem: function(){
 		if (this.selectedItem) {
