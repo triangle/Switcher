@@ -36,7 +36,15 @@ Switcher.Simple.prototype = {
 			this.prevSelectedValue = this.selectedItem._value;
 		}
 		this.selectedItem  = item;
-		this.selectedValue = item.value
+		this.selectedValue = item._value;
+	},
+	_clearSelectedItem: function(item){
+		if (this.selectedItem) {
+			this.prevSelectedItem  = this.selectedItem;
+			this.prevSelectedValue = this.selectedItem._value;
+		}
+		this.selectedItem  = null;
+		this.selectedValue = null
 	},
 
 	deselectSelectedItem: function(){

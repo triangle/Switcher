@@ -39,7 +39,7 @@ Switcher.Item.prototype = {
 	},
 	deselect: function(){
 		this._element.removeClass(this._selectedClass);
-		this.switcher.selectedItem = null;
+		this.switcher._clearSelectedItem();
 	},
 
 	isSelected: function(){
