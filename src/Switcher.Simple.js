@@ -5,6 +5,8 @@ Switcher.Simple = function(options){
 	
 	this._findItems();
 	this._attachCallback();
+	
+	this.selectedItem.select();
 }
 
 Switcher.Simple.prototype = {
