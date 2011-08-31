@@ -12,6 +12,17 @@ Function.prototype.scope = function(o){
 
 
 Switcher.utils = {
+	extend: function extend(subClass, superClass) {
+	  var F = function() {};
+	  F.prototype = superClass.prototype;
+	  subClass.prototype = new F();
+	  subClass.prototype.constructor = subClass;
+
+	  subClass.superClass = superClass.prototype;
+	  if(superClass.prototype.constructor == Object.prototype.constructor) {
+	    superClass.prototype.constructor = superClass;
+	  }
+	},
 	getSuffixClass: function(el, prefix) {
 		if($(el).length){
 			var classNames = $(el).attr('class').split(' ');
