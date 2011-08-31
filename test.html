@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script type="text/javascript" src="src/Switcher.js"></script>
+		<script type="text/javascript" src="src/Switcher.Simple.js"></script>
+		<script type="text/javascript" src="src/Switcher.Item.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				oSimpleSwitcher = new Switcher.Simple({
+					container: '.switcher',
+					itemSelector: '.switcher-item',
+					selectedClass: 'switcher-item_selected'
+				})
+			});
+		</script>
+		<style type="text/css">
+			.switcher-item_selected {
+				font-weight: bold;
+			}
+			
+			.pseudo {
+				border-bottom: 1px dotted;
+				color: blue;
+				cursor: pointer;
+			}
+			
+			.switcher-item_selected .pseudo {
+				border: none;
+				color: #000;
+				cursor: auto;
+			}
+		</style>
+	</head>
+	<body>
+	<span class="switcher">
+		<span class="switcher-item switcher-item_selected">
+			<span class="pseudo">Все</span>
+		</span>
+		<span class="switcher-item">
+			<span class="pseudo">Уже использовались</span>
+		</span>
+		<span class="switcher-item">
+			<span class="pseudo">Рекомендуемые</span>
+		</span>
+	</span>
+</body>
+</html>
