@@ -1,5 +1,5 @@
 Switcher.Simple = function(options){
-	this.options = options || {};
+	this.options = $.extend(true, {}, this.defaultOptions, options);
 
 	this.container = $(this.options.container);
 	
@@ -66,6 +66,13 @@ Switcher.Simple.prototype = {
 	deselectAllItems: function(){
 		for (var i = 0, num = this.items.length; i < num; i++){
 			this.items[i].deselect();
+		}
+	},
+	defaultOptions: {
+		items: {
+			selector: '.switcher-item',
+			selectedClass: 'switcher-item_selected',
+			valueAttribute: 'class'
 		}
 	}
 }
