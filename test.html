@@ -7,6 +7,7 @@
 		<script type="text/javascript" src="src/Switcher.Simple.js"></script>
 		<script type="text/javascript" src="src/Switcher.Item.js"></script>
 		<script type="text/javascript" src="src/Switcher.ContainerClassSwitcher.js"></script>
+		<script type="text/javascript" src="src/Switcher.ItemsClassSwitcher.js"></script>
 		<style type="text/css">
 			.switcher-item_selected {
 				font-weight: bold;
@@ -36,6 +37,14 @@
 				text-transform: uppercase;
 				letter-spacing: 3px;
 			}
+			
+			#example-3-slaves .slave-item {
+				padding: 2px 4px;
+			}
+			#example-3-slaves .slave-item_selected {
+				background: black;
+				color: #fff;
+			}
 		</style>
 	</head>
 	<body>
@@ -52,7 +61,7 @@
 				<span class="pseudo">Three</span>
 			</span>
 		</span>
-		—
+		&mdash;
 		<span id="example-1-value-display">click items to see the value</span>	
 	</p>
 	<script type="text/javascript">
@@ -95,6 +104,46 @@
 				},
 				controlledItems: {
 					container: '#example-2-slave'
+				}
+			});
+		});
+	</script>
+
+	
+	<h1>Example with item class</h1>
+	<p>
+		<span id="example-3-switcher">
+			<span class="switcher-item select_item-1">
+				<span class="pseudo">Select item 1</span>
+			</span>
+			<span class="switcher-item select_item-2">
+				<span class="pseudo">Select item 2</span>
+			</span>
+			<span class="switcher-item select_item-3">
+				<span class="pseudo">Select item 3</span>
+			</span>
+		</span>
+	</p>
+	
+	<div id="example-3-slaves">
+		<span class="slave-item slave_item-1">Item 1</span>
+		<span class="slave-item slave_item-2">Item 2</span>
+		<span class="slave-item slave_item-3">Item 3</span>
+	</div>
+	
+	<script type="text/javascript">
+		$(function(){
+			oExample3Switcher = new Switcher.ItemsClassSwitcher({
+				container: '#example-3-switcher',
+				items: {
+					valuePrefix: 'select_'
+				},
+				controlledItems: {
+					container: '#example-3-slaves',
+					selector: '.slave-item',
+					link: 'class',
+					linkPrefix: 'slave_',
+					addClass: 'slave-item_selected'
 				}
 			});
 		});
