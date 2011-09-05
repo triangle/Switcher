@@ -1,4 +1,4 @@
-Switcher.Item = function(options){
+Switcher.SwitcherItem = function(options){
 	this._element = $(options.element);
 	this.switcher = options.switcher;
 	
@@ -11,7 +11,7 @@ Switcher.Item = function(options){
 	
 }
 
-Switcher.Item.prototype = {
+Switcher.SwitcherItem.prototype = {
 	_setValue: function(){
 		switch (true) {
 			case this.options.valueSource == 'index':
@@ -21,7 +21,7 @@ Switcher.Item.prototype = {
 			case this.options.valueSource == 'id' || this.options.valueAttribute == 'id':
 			case this.options.valueSource == 'class' || this.options.valueAttribute == 'class':
 			case this.options.valueSource == 'attribute' || this.options.valueAttribute != '':
-				this._value = Switcher.utils.getSuffixClass(
+				this._value = Switcher.utils.getValueFromAttribute(
 					this._element,
 					this.options.valueAttribute || this.options.valueSource,
 					this.options.valuePrefix,

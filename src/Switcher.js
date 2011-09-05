@@ -23,13 +23,14 @@ Switcher.utils = {
 	    superClass.prototype.constructor = superClass;
 	  }
 	},
-	getSuffixClass: function(el, sAttrName, prefix, suffix) {
-		if($(el).length){
+	getValueFromAttribute: function(el, sAttrName, prefix, suffix) {
+		var el = $(el);
+		if(el.length){
 			var aAttrValues = [];
 			if (sAttrName != 'id'){
-				aAttrValues = $(el).attr(sAttrName).split(' ')
+				aAttrValues = el.attr(sAttrName).split(' ')
 			} else {
-				aAttrValues.push($(el).attr(sAttrName));
+				aAttrValues.push(el.attr(sAttrName));
 			}
 			for (var i = 0, len = aAttrValues.length; i < len; i++) {
 				if (

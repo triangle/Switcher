@@ -5,7 +5,7 @@
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 		<script type="text/javascript" src="src/Switcher.js"></script>
 		<script type="text/javascript" src="src/Switcher.Simple.js"></script>
-		<script type="text/javascript" src="src/Switcher.Item.js"></script>
+		<script type="text/javascript" src="src/Switcher.SwitcherItem.js"></script>
 		<script type="text/javascript" src="src/Switcher.ContainerClassSwitcher.js"></script>
 		<style type="text/css">
 			.switcher-item_selected {
@@ -26,16 +26,16 @@
 		</style>
 	</head>
 	<body>
-	<h1>Example with value from class</h1>
+	<h1>Example with value from class (with prefix)</h1>
 	<p>
 		<span id="example-1-switcher" class="switcher">
-			<span class="switcher-item i_think_1_is_the_value">
+			<span class="switcher-item i_value_1">
 				<span class="pseudo">Number 1</span>
 			</span>
-			<span class="switcher-item i_think_2_is_the_value">
+			<span class="switcher-item value_2">
 				<span class="pseudo">Number 2</span>
 			</span>
-			<span class="switcher-item i_think_3_is_the_value">
+			<span class="switcher-item value_3">
 				<span class="pseudo">Number 3</span>
 			</span>
 		</span>
@@ -47,8 +47,7 @@
 			oExample1Switcher = new Switcher.Simple({
 				container: '#example-1-switcher',
 				items: {
-					valuePrefix: 'i_think_',
-					valueSuffix: '_is_the_value'
+					valuePrefix: 'value'
 				},
 				selectCallback: function(data){
 					$("#example-1-value-display").html('switcher\'s value is ' + data.value);
@@ -121,6 +120,37 @@
 				},
 				selectCallback: function(data){
 					$("#example-3-value-display").html('switcher\'s value is ' + data.value);
+				}
+			});
+		});
+	</script>
+	
+	<h1>Example with value from id with prefix</h1>
+	<p>
+		<span id="example-4-switcher" class="switcher">
+			<span class="switcher-item" id="tab-first">
+				<span class="pseudo">Tab Uno</span>
+			</span>
+			<span class="switcher-item" id="tab-second">
+				<span class="pseudo">Tab Dos</span>
+			</span>
+			<span class="switcher-item" id="tab-third">
+				<span class="pseudo">Tab Tres</span>
+			</span>
+		</span>
+		&mdash;
+		<span id="example-4-value-display">click items to see the value</span>	
+	</p>
+	<script type="text/javascript">
+		$(function(){
+			oExample4Switcher = new Switcher.Simple({
+				container: '#example-4-switcher',
+				items: {
+					valueSource: 'id',
+					valuePrefix: 'tab-'
+				},
+				selectCallback: function(data){
+					$("#example-4-value-display").html('switcher\'s value is ' + data.value);
 				}
 			});
 		});

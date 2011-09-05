@@ -13,7 +13,7 @@ Switcher.Simple.prototype = {
 		this.items = [];
 		
 		this.container.find(this.options.items.selector).each(function(){
-			var newItem = new Switcher.Item({
+			var newItem = new Switcher.SwitcherItem({
 				element: this,
 				switcher: oThis,
 				itemsOptions: oThis.options.items
