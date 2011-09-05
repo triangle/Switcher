@@ -13,10 +13,21 @@ Switcher.Item = function(options){
 
 Switcher.Item.prototype = {
 	_setValue: function(){
-		this._valueElevemt = this._element;
-		
-		if (this.options.valueAttribute == "class") {
-			this._value = Switcher.utils.getSuffixClass(this._element, this.options.valuePrefix);
+		switch (true) {
+			case this.options.valueSource == 'index':
+				this._value = this.switcher.items.length;
+				break;
+
+			case this.options.valueSource == 'id' || this.options.valueAttribute == 'id':
+			case this.options.valueSource == 'class' || this.options.valueAttribute == 'class':
+			case this.options.valueSource == 'attribute' || this.options.valueAttribute != '':
+				this._value = Switcher.utils.getSuffixClass(
+					this._element,
+					this.options.valueAttribute || this.options.valueSource,
+					this.options.valuePrefix,
+					this.options.valueSuffix
+				);
+				break;
 		}
 	},
 	_attachEvents: function(){
