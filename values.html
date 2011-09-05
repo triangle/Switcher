@@ -29,7 +29,7 @@
 	<h1>Example with value from class (with prefix)</h1>
 	<p>
 		<span id="example-1-switcher" class="switcher">
-			<span class="switcher-item i_value_1">
+			<span class="switcher-item value_1">
 				<span class="pseudo">Number 1</span>
 			</span>
 			<span class="switcher-item value_2">
@@ -47,7 +47,7 @@
 			oExample1Switcher = new Switcher.Simple({
 				container: '#example-1-switcher',
 				items: {
-					valuePrefix: 'value'
+					valuePrefix: 'value_'
 				},
 				selectCallback: function(data){
 					$("#example-1-value-display").html('switcher\'s value is ' + data.value);
