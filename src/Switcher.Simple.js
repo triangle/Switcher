@@ -72,7 +72,7 @@ Switcher.Simple.prototype = {
 		items: {
 			selector: '.switcher-item',
 			selectedClass: 'switcher-item_selected',
-			valueAttribute: 'class'
+			valueSource: 'class'
 		}
 	}
 }

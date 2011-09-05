@@ -23,12 +23,20 @@ Switcher.utils = {
 	    superClass.prototype.constructor = superClass;
 	  }
 	},
-	getSuffixClass: function(el, prefix) {
+	getSuffixClass: function(el, sAttrName, prefix, suffix) {
 		if($(el).length){
-			var classNames = $(el).attr('class').split(' ');
-			for (var i = 0; i < classNames.length; i++) {
-				if (prefix == classNames[i].substr(0, prefix.length)) {
-					return classNames[i].substr(prefix.length);
+			var aAttrValues = [];
+			if (sAttrName != 'id'){
+				aAttrValues = $(el).attr(sAttrName).split(' ')
+			} else {
+				aAttrValues.push($(el).attr(sAttrName));
+			}
+			for (var i = 0, len = aAttrValues.length; i < len; i++) {
+				if (
+						(!prefix || prefix && aAttrValues[i].indexOf(prefix) == 0)
+						&& (!suffix || suffix && aAttrValues[i].substr(aAttrValues[i].length - suffix.length) == suffix)
+				){
+					return aAttrValues[i].slice(prefix ? prefix.length : 0, aAttrValues[i].length - (suffix ? suffix.length : 0));
 				}
 			}
 		}
