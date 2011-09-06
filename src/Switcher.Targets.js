@@ -58,6 +58,17 @@ Switcher.Targets.prototype = {
 				if (this.switcher.options.action.addClass)
 					this.oItems[value].addClass(this.switcher.options.action.addClass);
 				break;
+				
+			case this.options.actionType == 'setTargetsValueClass':
+				var
+					classPrefix = this.switcher.options.action.classPrefix || '',
+					classSuffix = this.switcher.options.action.classSuffix || '',
+					prevValueClass = classPrefix + prevValue + classSuffix,
+					valueClass = classPrefix + value + classSuffix;
+			
+				this.items
+					.removeClass(prevValueClass)
+					.addClass(valueClass)
 		}
 	}
 }
