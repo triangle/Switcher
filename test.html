@@ -49,7 +49,7 @@
 		</style>
 	</head>
 	<body>
-	<h1>Example with callbak</h1>
+	<h1>Example with callback</h1>
 	<p>
 		<span id="example-1-switcher" class="switcher">
 			<span class="switcher-item value_1">
@@ -98,14 +98,15 @@
 	
 	<script type="text/javascript">
 		$(function(){
-			oExample2Switcher = new Switcher.ContainerClassSwitcher({
+			oExample2Switcher = new Switcher.Simple({
 				container: '#example-2-switcher',
 				items: {
 					valuePrefix: 'switch-to_'
 				},
 				targets: {
 					container: '#example-2-slave'
-				}
+				},
+				action: 'setTargetsValueClass'
 			});
 		});
 	</script>
@@ -134,7 +135,7 @@
 	
 	<script type="text/javascript">
 		$(function(){
-			oExample3Switcher = new Switcher.ItemsClassSwitcher({
+			oExample3Switcher = new Switcher.Simple({
 				container: '#example-3-switcher',
 				items: {
 					valuePrefix: 'select_'
@@ -144,6 +145,9 @@
 					selector: '.slave-item',
 					linkSource: 'class',
 					linkPrefix: 'slave_',
+				},
+				action: {
+					type: 'toggleTargetsClass',
 					addClass: 'slave-item_selected'
 				}
 			});
