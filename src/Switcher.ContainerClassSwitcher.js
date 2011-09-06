@@ -1,14 +1,12 @@
 Switcher.ContainerClassSwitcher = function(options){
 	Switcher.ContainerClassSwitcher.superClass.constructor.call(this, options);
 	
-	this.options.controlledItems.classPrefix = this.options.controlledItems.classPrefix || '';
-	
-	this._slavesContainer = $(this.options.controlledItems.container);
+	this.options.targets.classPrefix = this.options.targets.classPrefix || '';
 }
 Switcher.utils.extend(Switcher.ContainerClassSwitcher, Switcher.Simple);
 
-Switcher.ContainerClassSwitcher.prototype._updateSlaves = function(){
-	this._slavesContainer
-		.removeClass(this.options.controlledItems.classPrefix + this.prevSelectedValue)
-		.addClass(this.options.controlledItems.classPrefix + this.selectedValue);
+Switcher.ContainerClassSwitcher.prototype._updateTargets = function(){
+	this.targets.container
+		.removeClass(this.options.targets.classPrefix + this.prevSelectedValue)
+		.addClass(this.options.targets.classPrefix + this.selectedValue);
 }

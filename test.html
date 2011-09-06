@@ -6,6 +6,7 @@
 		<script type="text/javascript" src="src/Switcher.js"></script>
 		<script type="text/javascript" src="src/Switcher.Simple.js"></script>
 		<script type="text/javascript" src="src/Switcher.SwitcherItem.js"></script>
+		<script type="text/javascript" src="src/Switcher.Targets.js"></script>
 		<script type="text/javascript" src="src/Switcher.ContainerClassSwitcher.js"></script>
 		<script type="text/javascript" src="src/Switcher.ItemsClassSwitcher.js"></script>
 		<style type="text/css">
@@ -102,7 +103,7 @@
 				items: {
 					valuePrefix: 'switch-to_'
 				},
-				controlledItems: {
+				targets: {
 					container: '#example-2-slave'
 				}
 			});
@@ -138,10 +139,10 @@
 				items: {
 					valuePrefix: 'select_'
 				},
-				controlledItems: {
+				targets: {
 					container: '#example-3-slaves',
 					selector: '.slave-item',
-					link: 'class',
+					linkSource: 'class',
 					linkPrefix: 'slave_',
 					addClass: 'slave-item_selected'
 				}

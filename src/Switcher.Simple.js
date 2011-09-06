@@ -53,8 +53,8 @@ Switcher.Simple.prototype = {
 		this.selectedValue = null
 	},
 	_invokeCallbacks: function(){
-		if (this._updateSlaves) {
-			this._updateSlaves();
+		if (this._updateTargets) {
+			this._updateTargets();
 		}
 		
 		if (this.selectCallback) {
