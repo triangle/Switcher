@@ -1,22 +1,22 @@
 Switcher.Targets = function(switcher, options){
 	this.options = options;
-	this.switcher = switcher
+	this.switcher = switcher;
 	
 	this.container = $(this.options.container);
 	
 	this.options.actionType = (typeof this.switcher.options.action == 'string' ? this.switcher.options.action : this.switcher.options.action.type);
 	
-	this._findItems();
+	this._findItems(switcher.items);
 }
 
 Switcher.Targets.prototype = {
-	_findItems: function(){
+	_findItems: function(switcherItems){
 		if (this.options.selector) {
 			this.items = this.container.find(this.options.selector);
 			this.oItems = {};
 			
-			for (var i = 0, len = this.switcher.items.length; i < len; i++){
-				this.oItems[this.switcher.items[i]._value] = this._getItemsByValue(this.switcher.items[i]._value);
+			for (var i = 0, len = switcherItems.length; i < len; i++){
+				this.oItems[switcherItems[i]._value] = this._getItemsByValue(switcherItems[i]._value);
 			}
 		} else {
 			this.items = this.container;
