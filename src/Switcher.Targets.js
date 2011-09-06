@@ -11,11 +11,15 @@ Switcher.Targets = function(switcher, options){
 
 Switcher.Targets.prototype = {
 	_findItems: function(){
-		this.items = this.container.find(this.options.selector);
-		this.oItems = {};
-		
-		for (var i = 0, len = this.switcher.items.length; i < len; i++){
-			this.oItems[this.switcher.items[i]._value] = this._getItemsByValue(this.switcher.items[i]._value);
+		if (this.options.selector) {
+			this.items = this.container.find(this.options.selector);
+			this.oItems = {};
+			
+			for (var i = 0, len = this.switcher.items.length; i < len; i++){
+				this.oItems[this.switcher.items[i]._value] = this._getItemsByValue(this.switcher.items[i]._value);
+			}
+		} else {
+			this.items = this.container;
 		}
 	},
 	_getItemsByValue: function(value){
@@ -48,9 +52,9 @@ Switcher.Targets.prototype = {
 				break;
 				
 			case this.options.actionType == 'toggleTargetsClass':
-				if (this.switcher.options.action.addClass)
+				if (prevValue && this.switcher.options.action.addClass)
 					this.oItems[prevValue].removeClass(this.switcher.options.action.addClass);
-				if (this.switcher.options.action.removeClass)
+				if (prevValue && this.switcher.options.action.removeClass)
 					this.oItems[prevValue].addClass(this.switcher.options.action.removeClass);
 
 				if (this.switcher.options.action.removeClass)
