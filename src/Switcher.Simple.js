@@ -57,6 +57,10 @@ Switcher.Simple.prototype = {
 			this._updateTargets();
 		}
 		
+		if (this.targets) {
+			this.targets.updateItems(this.selectedValue, this.prevSelectedValue);
+		}
+		
 		if (this.selectCallback) {
 			this.selectCallback({ value: this.selectedValue });
 		}		
