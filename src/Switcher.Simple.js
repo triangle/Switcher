@@ -5,6 +5,10 @@ Switcher.Simple = function(options){
 	
 	this._findItems();
 	this._attachCallback();
+	
+	if (this.options.targets) {
+		this.targets = new Switcher.Targets(this, this.options.targets)
+	}
 }
 
 Switcher.Simple.prototype = {
