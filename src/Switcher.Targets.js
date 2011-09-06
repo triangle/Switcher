@@ -17,7 +17,7 @@ Switcher.Targets.prototype = {
 		}
 	},
 	_getItemsByValue: function(value){
-		var selector = (this.options.linkPrefix ? this.options.linkPrefix : '') + value + (this.options.linkSuffix ? this.options.linkSuffix : '');
+		var selector = (this.options.linkPrefix || '') + value + (this.options.linkSuffix || '');
 
 		switch (true) {
 			case this.options.linkSource == 'index':
