@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Switcher</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script type="text/javascript" src="src/Switcher.js"></script>
+		<script type="text/javascript" src="src/Switcher.Simple.js"></script>
+		<script type="text/javascript" src="src/Switcher.SwitcherItem.js"></script>
+		<script type="text/javascript" src="src/Switcher.Targets.js"></script>
+		<style type="text/css">
+			.switcher-item_selected {
+				font-weight: bold;
+			}
+			
+			.pseudo {
+				border-bottom: 1px dotted;
+				color: MediumBlue;
+				cursor: pointer;
+			}
+			
+			.switcher-item_selected .pseudo {
+				border: none;
+				color: #000;
+				cursor: auto;
+			}
+			
+			.switcher_tab-style {
+				margin-left: -4px;
+			}
+			.switcher_tab-style .switcher-item {
+				padding: 2px 4px;
+			}
+			.switcher_tab-style .switcher-item_selected {
+				color: #fff;
+				background: #000;
+				font-weight: normal;
+			}
+			.switcher_tab-style .switcher-item_selected .pseudo {
+				color: #fff;
+			}
+
+		</style>
+	</head>
+	<body>
+	<h1>Basic example</h1>
+	<p>Imagine you build a demo mockup that has some sort of switcher in there. You want it just to appear working, and you don't need anything else right now, you want to be able to add functionality later.</p>
+	<p>So, here what it can look like:</p>
+	<p>
+		<span id="example-1-switcher" class="switcher switcher_tab-style">
+			<span class="switcher-item">
+				<span class="pseudo">Switch here</span>
+			</span>
+			<span class="switcher-item">
+				<span class="pseudo">Switch there</span>
+			</span>
+			<span class="switcher-item">
+				<span class="pseudo">Switch somewhere</span>
+			</span>
+		</span>
+	</p>
+	<script type="text/javascript">
+		$(function(){
+			oExample1Switcher = new Switcher.Simple({
+				items: '#example-1-switcher .switcher-item'
+			});
+		});
+	</script>
+	<p>Pretty basic, right? Just the selection switching, nothing more.</p>
+</body>
+</html>
