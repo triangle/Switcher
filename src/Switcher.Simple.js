@@ -1,7 +1,11 @@
 Switcher.Simple = function(options){
+	if (typeof options.items == 'string') {
+		options.items = {
+			selector: options.items
+		}
+	}
 	this.options = $.extend(true, {}, this.defaultOptions, options);
-
-	this.container = $(this.options.container);
+	this.options.items.container = this.options.items.container || ''; 
 	
 	this._findItems();
 	this._attachCallback();
@@ -16,7 +20,7 @@ Switcher.Simple.prototype = {
 		var oThis = this;
 		this.items = [];
 		
-		this.container.find(this.options.items.selector).each(function(){
+		$(this.options.items.container + ' ' + this.options.items.selector).each(function(){
 			var newItem = new Switcher.SwitcherItem({
 				element: this,
 				switcher: oThis,
