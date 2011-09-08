@@ -40,6 +40,27 @@
 				color: #fff;
 			}
 
+			#example-2-switcher .subscription-plan {
+				padding-left: 4px;
+				margin-left: -4px;
+			}
+			#example-2-switcher .subscription-plan .description {
+				display: none;
+			}
+			#example-2-switcher .subscription-plan_selected {
+				padding-left: 0;
+				margin-left: -5px;
+			}
+			#example-2-switcher .subscription-plan_selected .pseudo {
+				border: 1px solid #000;
+				border-radius: 4px;
+				padding: 2px 4px;
+				cursor: default;
+				color: #000;
+			}
+			#example-2-switcher .subscription-plan_selected .description {
+				display: inline;
+			}
 		</style>
 	</head>
 	<body>
@@ -67,5 +88,25 @@
 		});
 	</script>
 	<p>Pretty basic, right? Just the selection switching, nothing more.</p>
+	<h2>Adding complexity through CSS</h2>
+	<p>We can already use this simple thing in the real world. Like that:</p>
+	<div id="example-2-switcher">
+		<p class="subscription-plan"><span class="pseudo">Basic plan</span> <span class="description">— 5 movies per month. <a href="#">Sign up</a></span></p>
+		<p class="subscription-plan"><span class="pseudo">Unlimited plan</span> <span class="description">— unlimited number of movies per month. <a href="#">Right, sign me up!</a></span></p>
+		<p class="subscription-plan"><span class="pseudo">Unlimited VIP plan</span> <span class="description">— unlimited number of movies per month, plus 1 <em>free beer every week.</em> <a href="#">Yes, I want this!</a></span></p>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			oExample2Switcher = new Switcher({
+				items: {
+					selector: '#example-2-switcher .subscription-plan',
+					selectedClass: 'subscription-plan_selected'
+				} 
+			});
+		});
+	</script>
+	
+	<h1>Now, let's do some real friggin' switchin'!</h1>
+	<p>Well, to have the items that we click control something on the page, we need to do one simple thing. We need to <em>link</em> these <em>items</em> through their <em>values</em> with other elements (we call them <em>targets</em>), and choose an <em>action</em> to be executed.</p>
 </body>
 </html>
