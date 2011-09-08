@@ -61,6 +61,16 @@
 			#example-2-switcher .subscription-plan_selected .description {
 				display: inline;
 			}
+			
+			#property-boxes .property-box {
+				float: left;
+				width: 7em;
+				height: 5em;
+				text-align: center;
+				border: 1px solid silver;
+				padding: 5px;
+				margin: 0 20px 20px 0;
+			}
 		</style>
 	</head>
 	<body>
@@ -108,5 +118,60 @@
 	
 	<h1>Now, let's do some real friggin' switchin'!</h1>
 	<p>Well, to have the items that we click control something on the page, we need to do one simple thing. We need to <em>link</em> these <em>items</em> through their <em>values</em> with other elements (we call them <em>targets</em>), and choose an <em>action</em> to be executed.</p>
+	<h2>Wait. How that is simple?</h2>
+	
+	<p id="example-3-switcher" class="switcher_tab-style">
+		<span class="switcher-item v_property-box"><span class="pseudo">Show all</span></span>
+		<span class="switcher-item v_p1"><span class="pseudo">Only with property 1</span></span>
+		<span class="switcher-item v_p2"><span class="pseudo">Only with property 2</span></span>
+		<span class="switcher-item v_p3"><span class="pseudo">Only with property 3</span></span>
+	</p>
+	
+	<div id="property-boxes">
+		<div class="property-box p1 p3">
+			<div><strong>Box A</strong></div>
+			<div>Has property 1</div>
+			<div>Has property 3</div>
+		</div>
+
+		<div class="property-box p2">
+			<div><strong>Box B</strong></div>
+			<div>Has property 2</div>
+		</div>
+		
+		<div class="property-box p2 p3">
+			<div><strong>Box C</strong></div>
+			<div>Has property 3</div>
+			<div>Has property 2</div>
+		</div>
+		
+		<div class="property-box p1">
+			<div><strong>Box D</strong></div>
+			<div>Has property 1</div>
+		</div>
+		
+		<div class="property-box p3">
+			<div><strong>Box E</strong></div>
+			<div>Has property 3</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		$(function(){
+			oExample3Switcher = new Switcher({
+				items: {
+					container: '#example-3-switcher',
+					valueSource: 'class',
+					valuePrefix: 'v_'
+				},
+				targets: {
+					container: '#property-boxes',
+					selector: '.property-box',
+					linkSource: 'class'
+				},
+				action: 'toggleTargets'
+			});
+		});
+	</script>
 </body>
 </html>
