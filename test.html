@@ -4,7 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 		<script type="text/javascript" src="src/Switcher.js"></script>
-		<script type="text/javascript" src="src/Switcher.Simple.js"></script>
+		<script type="text/javascript" src="src/Switcher.Basic.js"></script>
 		<script type="text/javascript" src="src/Switcher.SwitcherItem.js"></script>
 		<script type="text/javascript" src="src/Switcher.Targets.js"></script>
 		<style type="text/css">
@@ -65,7 +65,7 @@
 	</p>
 	<script type="text/javascript">
 		$(function(){
-			oExample1Switcher = new Switcher.Simple({
+			oExample1Switcher = new Switcher({
 				items: {
 					container: '#example-1-switcher',
 					valuePrefix: 'value_'
@@ -96,7 +96,7 @@
 	
 	<script type="text/javascript">
 		$(function(){
-			oExample2Switcher = new Switcher.Simple({
+			oExample2Switcher = new Switcher({
 				items: {
 					container: '#example-2-switcher',
 					valuePrefix: 'switch-to_'
@@ -133,7 +133,7 @@
 	
 	<script type="text/javascript">
 		$(function(){
-			oExample3Switcher = new Switcher.Simple({
+			oExample3Switcher = new Switcher({
 				items: {
 					container: '#example-3-switcher',
 					valuePrefix: 'select_'

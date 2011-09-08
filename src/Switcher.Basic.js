@@ -1,4 +1,4 @@
-Switcher.Simple = function(options){
+Switcher.Basic = function(options){
 	if (typeof options.items == 'string') {
 		options.items = {
 			selector: options.items
@@ -15,7 +15,7 @@ Switcher.Simple = function(options){
 	}
 }
 
-Switcher.Simple.prototype = {
+Switcher.Basic.prototype = {
 	_findItems: function(){
 		var oThis = this;
 		this.items = [];

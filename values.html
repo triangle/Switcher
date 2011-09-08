@@ -4,7 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 		<script type="text/javascript" src="src/Switcher.js"></script>
-		<script type="text/javascript" src="src/Switcher.Simple.js"></script>
+		<script type="text/javascript" src="src/Switcher.Basic.js"></script>
 		<script type="text/javascript" src="src/Switcher.SwitcherItem.js"></script>
 		<style type="text/css">
 			.switcher-item_selected {
@@ -43,7 +43,7 @@
 	</p>
 	<script type="text/javascript">
 		$(function(){
-			oExample1Switcher = new Switcher.Simple({
+			oExample1Switcher = new Switcher({
 				items: {
 					container: '#example-1-switcher',
 					valuePrefix: 'value_'
@@ -73,7 +73,7 @@
 	</p>
 	<script type="text/javascript">
 		$(function(){
-			oExample2Switcher = new Switcher.Simple({
+			oExample2Switcher = new Switcher({
 				items: {
 					container: '#example-2-switcher',
 					valueAttribute: 'my-custom-value'
@@ -112,7 +112,7 @@
 	</p>
 	<script type="text/javascript">
 		$(function(){
-			oExample3Switcher = new Switcher.Simple({
+			oExample3Switcher = new Switcher({
 				items: {
 					container: '#example-3-switcher',
 					valueSource: 'index'
@@ -142,7 +142,7 @@
 	</p>
 	<script type="text/javascript">
 		$(function(){
-			oExample4Switcher = new Switcher.Simple({
+			oExample4Switcher = new Switcher({
 				items: {
 					container: '#example-4-switcher',
 					valueSource: 'id',
