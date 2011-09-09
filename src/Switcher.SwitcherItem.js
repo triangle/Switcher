@@ -31,7 +31,7 @@ Switcher.SwitcherItem.prototype = {
 		}
 	},
 	_attachEvents: function(){
-		this._element.click(this.click.scope(this));
+		this._element.click($.proxy(this.click, this));
 	},
 
 	click: function(event){
