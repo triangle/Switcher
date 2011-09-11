@@ -52,9 +52,9 @@ Switcher.Targets.prototype = {
 				break;
 				
 			case this.options.actionType == 'toggleTargetsClass':
-				if (prevValue && this.switcher.options.action.addClass)
+				if (prevValue !== undefined && this.switcher.options.action.addClass)
 					this.oItems[prevValue].removeClass(this.switcher.options.action.addClass);
-				if (prevValue && this.switcher.options.action.removeClass)
+				if (prevValue !== undefined && this.switcher.options.action.removeClass)
 					this.oItems[prevValue].addClass(this.switcher.options.action.removeClass);
 
 				if (this.switcher.options.action.removeClass)
