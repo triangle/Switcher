@@ -2,7 +2,7 @@ Switcher.Targets = function(switcher, options){
 	this.options = options;
 	this.switcher = switcher;
 	
-	this.container = $(this.options.container);
+	this.options.container = this.options.container || '';
 	
 	this.options.actionType = (typeof this.switcher.options.action == 'string' ? this.switcher.options.action : this.switcher.options.action.type);
 	
@@ -12,14 +12,14 @@ Switcher.Targets = function(switcher, options){
 Switcher.Targets.prototype = {
 	_findItems: function(switcherItems){
 		if (this.options.selector) {
-			this.items = this.container.find(this.options.selector);
+			this.items = $(this.options.container + ' ' + this.options.selector);
 			this.oItems = {};
 			
 			for (var i = 0, len = switcherItems.length; i < len; i++){
 				this.oItems[switcherItems[i]._value] = this._getItemsByValue(switcherItems[i]._value);
 			}
 		} else {
-			this.items = this.container;
+			this.items = $(this.options.container);
 		}
 	},
 	_getItemsByValue: function(value){
