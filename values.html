@@ -44,6 +44,7 @@
 			oExample1Switcher = new Switcher({
 				items: {
 					container: '#example-1-switcher',
+					valueSource: 'class',
 					valuePrefix: 'value_'
 				},
 				selectCallback: function(data){
@@ -112,8 +113,7 @@
 		$(function(){
 			oExample3Switcher = new Switcher({
 				items: {
-					container: '#example-3-switcher',
-					valueSource: 'index'
+					container: '#example-3-switcher'
 				},
 				selectCallback: function(data){
 					$("#example-3-value-display").html('switcher\'s value is ' + data.value);
