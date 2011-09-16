@@ -1,0 +1,264 @@
+/*
+ * Switcher v0.12
+ * 
+ * Requires jQuery
+ */
+var Switcher = function(options){
+	return new Switcher.Basic(options);
+};
+Switcher.Basic = function(options){
+	if (typeof options.items == 'string') {
+		options.items = {
+			selector: options.items
+		}
+	}
+	this.options = $.extend(true, {}, this.defaultOptions, options);
+	this.options.items.container = this.options.items.container || ''; 
+	
+	this._findItems();
+	this._attachCallback();
+	
+	if (this.options.targets) {
+		this.targets = new Switcher.Targets(this, this.options.targets)
+	}
+}
+
+Switcher.Basic.prototype = {
+	_findItems: function(){
+		var oThis = this;
+		this.items = [];
+		
+		$(this.options.items.container + ' ' + this.options.items.selector).each(function(){
+			var newItem = new Switcher.SwitcherItem({
+				element: this,
+				switcher: oThis,
+				itemsOptions: oThis.options.items
+			});
+			oThis.items.push(newItem);
+			
+			if (!oThis.selectedItem && newItem.isSelected()){
+				oThis.selectedItem = newItem;
+			} 
+		});
+	},
+	_attachCallback: function(){
+		if (this.options.selectCallback && typeof this.options.selectCallback === 'function') {
+			this.selectCallback = this.options.selectCallback;
+		}
+	},
+	_setSelectedItem: function(item){
+		if (this.selectedItem) {
+			this.prevSelectedItem  = this.selectedItem;
+			this.prevSelectedValue = this.selectedItem._value;
+		}
+		this.selectedItem  = item;
+		this.selectedValue = item._value;
+		
+		this._invokeCallbacks();
+	},
+	_clearSelectedItem: function(item){
+		if (this.selectedItem) {
+			this.prevSelectedItem  = this.selectedItem;
+			this.prevSelectedValue = this.selectedItem._value;
+		}
+		this.selectedItem  = null;
+		this.selectedValue = null
+	},
+	_invokeCallbacks: function(){
+		if (this._updateTargets) {
+			this._updateTargets();
+		}
+		
+		if (this.targets) {
+			this.targets.updateItems(this.selectedValue, this.prevSelectedValue);
+		}
+		
+		if (this.selectCallback) {
+			this.selectCallback({ value: this.selectedValue });
+		}		
+	},
+
+	deselectSelectedItem: function(){
+		if (this.selectedItem) {
+			this.selectedItem.deselect();
+		}
+	},
+	deselectAllItems: function(){
+		for (var i = 0, num = this.items.length; i < num; i++){
+			this.items[i].deselect();
+		}
+	},
+	defaultOptions: {
+		items: {
+			selector: '.switcher-item',
+			selectedClass: 'switcher-item_selected',
+			valueSource: 'class'
+		}
+	}
+}
+Switcher.SwitcherItem = function(options){
+	this._element = $(options.element);
+	this.switcher = options.switcher;
+	
+	this.options = options.itemsOptions;
+	
+	this._selectedClass = options.itemsOptions.selectedClass;
+	
+	this._setValue();
+	this._attachEvents();
+	
+}
+
+Switcher.SwitcherItem.prototype = {
+	_setValue: function(){
+		switch (true) {
+			case this.options.valueSource == 'index':
+				this._value = this.switcher.items.length;
+				break;
+
+			case this.options.valueSource == 'id' || this.options.valueAttribute == 'id':
+			case this.options.valueSource == 'class' || this.options.valueAttribute == 'class':
+			case this.options.valueSource == 'attribute' || this.options.valueAttribute != '':
+				this._value = Switcher.utils.getValueFromAttribute(
+					this._element,
+					this.options.valueAttribute || this.options.valueSource,
+					this.options.valuePrefix,
+					this.options.valueSuffix
+				);
+				break;
+		}
+	},
+	_attachEvents: function(){
+		this._element.click($.proxy(this.click, this));
+	},
+
+	click: function(event){
+		if (this.isSelected()) return;
+		
+		this.switcher.deselectSelectedItem();
+		this.select();
+	},
+	select: function(){
+		this._element.addClass(this._selectedClass);
+		this.switcher._setSelectedItem(this);
+	},
+	deselect: function(){
+		this._element.removeClass(this._selectedClass);
+		this.switcher._clearSelectedItem();
+	},
+
+	isSelected: function(){
+		return this._element.hasClass(this._selectedClass);
+	}
+}
+Switcher.Targets = function(switcher, options){
+	this.options = options;
+	this.switcher = switcher;
+	
+	this.options.container = this.options.container || '';
+	
+	this.options.actionType = (typeof this.switcher.options.action == 'string' ? this.switcher.options.action : this.switcher.options.action.type);
+	
+	this._findItems(switcher.items);
+}
+
+Switcher.Targets.prototype = {
+	_findItems: function(switcherItems){
+		if (this.options.selector) {
+			this.items = $(this.options.container + ' ' + this.options.selector);
+			this.oItems = {};
+			
+			for (var i = 0, len = switcherItems.length; i < len; i++){
+				this.oItems[switcherItems[i]._value] = this._getItemsByValue(switcherItems[i]._value);
+			}
+		} else {
+			this.items = $(this.options.container);
+		}
+	},
+	_getItemsByValue: function(value){
+		var selector = (this.options.linkPrefix || '') + value + (this.options.linkSuffix || '');
+
+		switch (true) {
+			case this.options.linkSource == 'index':
+				return this.items.eq(value);
+				break;
+
+			case this.options.linkSource == 'id' || this.options.linkAttribute == 'id':
+				return this.items.filter('#' + selector);
+				break;
+
+			case this.options.linkSource == 'class' || this.options.linkAttribute == 'class':
+				return this.items.filter('.' + selector);
+				break;
+
+			case this.options.linkSource == 'attribute' || this.options.linkAttribute:
+				return this.items.filter('[name~="' + selector + '"]');
+				break;
+		}
+	},
+
+	updateItems: function(value, prevValue){
+		switch(true) {
+			case this.options.actionType == 'toggleTargets':
+				this.items.not(this.oItems[value]).hide();
+				this.oItems[value].show();
+				break;
+				
+			case this.options.actionType == 'toggleTargetsClass':
+				if (prevValue !== undefined && this.switcher.options.action.addClass)
+					this.oItems[prevValue].removeClass(this.switcher.options.action.addClass);
+				if (prevValue !== undefined && this.switcher.options.action.removeClass)
+					this.oItems[prevValue].addClass(this.switcher.options.action.removeClass);
+
+				if (this.switcher.options.action.removeClass)
+					this.oItems[value].removeClass(this.switcher.options.action.removeClass);
+				if (this.switcher.options.action.addClass)
+					this.oItems[value].addClass(this.switcher.options.action.addClass);
+				break;
+				
+			case this.options.actionType == 'setTargetsValueClass':
+				var
+					classPrefix = this.switcher.options.action.classPrefix || '',
+					classSuffix = this.switcher.options.action.classSuffix || '',
+					prevValueClass = classPrefix + prevValue + classSuffix,
+					valueClass = classPrefix + value + classSuffix;
+			
+				this.items
+					.removeClass(prevValueClass)
+					.addClass(valueClass)
+		}
+	}
+}
+Switcher.utils = {
+	extend: function extend(subClass, superClass) {
+	  var F = function() {};
+	  F.prototype = superClass.prototype;
+	  subClass.prototype = new F();
+	  subClass.prototype.constructor = subClass;
+
+	  subClass.superClass = superClass.prototype;
+	  if(superClass.prototype.constructor == Object.prototype.constructor) {
+	    superClass.prototype.constructor = superClass;
+	  }
+	},
+	getValueFromAttribute: function(el, sAttrName, prefix, suffix) {
+		var el = $(el);
+		if(el.length){
+			var aAttrValues = [];
+			if (sAttrName != 'id'){
+				aAttrValues = el.attr(sAttrName).split(' ')
+			} else {
+				aAttrValues.push(el.attr(sAttrName));
+			}
+			for (var i = 0, len = aAttrValues.length; i < len; i++) {
+				if (
+					(!prefix || prefix && aAttrValues[i].indexOf(prefix) == 0)
+					&& (!suffix || suffix && aAttrValues[i].substr(aAttrValues[i].length - suffix.length) == suffix)
+				){
+					return aAttrValues[i].slice(prefix ? prefix.length : 0, aAttrValues[i].length - (suffix ? suffix.length : 0));
+				}
+			}
+		}
+		return false;
+	}
+}
