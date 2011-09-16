@@ -1,5 +1,5 @@
 /*
- * Switcher v0.15
+ * Switcher v0.16
  * 
  * Requires jQuery
  */
@@ -152,6 +152,11 @@ Switcher.SwitcherItem.prototype = {
 	}
 }
 Switcher.Targets = function(switcher, options){
+	if (typeof options == 'string') {
+		options = {
+			selector: options
+		}
+	}
 	this.options = options;
 	this.switcher = switcher;
 	

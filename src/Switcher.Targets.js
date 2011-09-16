@@ -1,4 +1,9 @@
 Switcher.Targets = function(switcher, options){
+	if (typeof options == 'string') {
+		options = {
+			selector: options
+		}
+	}
 	this.options = options;
 	this.switcher = switcher;
 	
