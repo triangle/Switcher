@@ -84,7 +84,7 @@ Switcher.Basic.prototype = {
 		items: {
 			selector: '.switcher-item',
 			selectedClass: 'switcher-item_selected',
-			valueSource: 'class'
+			valueSource: 'index'
 		}
 	}
 }
