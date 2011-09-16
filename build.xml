@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Switcher" default="main">
+
+	<target name="main">
+		<concat destfile="js/Switcher.js" fixlastline="true">
+			<filelist dir="src">
+				<file name="Switcher.js" />
+				<file name="Switcher.Basic.js" />
+				<file name="Switcher.SwitcherItem.js" />
+				<file name="Switcher.Targets.js" />
+				<file name="Switcher.utils.js" />	
+			</filelist>
+		</concat>
+	</target>
+
+</project>
