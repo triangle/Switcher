@@ -1,5 +1,5 @@
 /*
- * Switcher v0.14
+ * Switcher v0.15
  * 
  * Requires jQuery
  */
@@ -187,8 +187,8 @@ Switcher.Targets.prototype = {
 				return this.items.filter('.' + selector);
 				break;
 
-			case this.options.linkSource == 'attribute' || this.options.linkAttribute:
-				return this.items.filter('[name~="' + selector + '"]');
+			case this.options.linkSource == 'attribute' || (this.options.linkAttribute !== undefined && this.options.linkAttribute != ''):
+				return this.items.filter('[' + this.options.linkAttribute + '~="' + selector + '"]');
 				break;
 			
 			case this.options.linkSource == 'index':
