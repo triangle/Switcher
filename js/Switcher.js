@@ -1,5 +1,5 @@
 /*
- * Switcher v0.13
+ * Switcher v0.14
  * 
  * Requires jQuery
  */
@@ -179,10 +179,6 @@ Switcher.Targets.prototype = {
 		var selector = (this.options.linkPrefix || '') + value + (this.options.linkSuffix || '');
 
 		switch (true) {
-			case this.options.linkSource == 'index':
-				return this.items.eq(value);
-				break;
-
 			case this.options.linkSource == 'id' || this.options.linkAttribute == 'id':
 				return this.items.filter('#' + selector);
 				break;
@@ -193,6 +189,11 @@ Switcher.Targets.prototype = {
 
 			case this.options.linkSource == 'attribute' || this.options.linkAttribute:
 				return this.items.filter('[name~="' + selector + '"]');
+				break;
+			
+			case this.options.linkSource == 'index':
+			default:
+				return this.items.eq(value);
 				break;
 		}
 	},

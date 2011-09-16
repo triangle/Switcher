@@ -3,11 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-		<script type="text/javascript" src="src/Switcher.js"></script>
-		<script type="text/javascript" src="src/Switcher.Basic.js"></script>
-		<script type="text/javascript" src="src/Switcher.SwitcherItem.js"></script>
-		<script type="text/javascript" src="src/Switcher.Targets.js"></script>
-		<script type="text/javascript" src="src/Switcher.utils.js"></script>
+		<script type="text/javascript" src="js/Switcher.js"></script>
 		<style type="text/css">
 			.switcher-item_selected {
 				font-weight: bold;
@@ -44,35 +40,32 @@
 				<span class="pseudo">Tab 3</span>
 			</span>
 		</span>
-		<div id="example-1-tabs">
-			<div id="example-1_tab-0" class="tab">
-				<p>It's official: Telluride is George Clooney's town now. Everyone else -- Glenn Close, Tilda Swinton, Jennifer Garner, the dogs, the hippies, even the Lauren and Bush clans up in the mountains -- just lives in it.</p>
-			</div>
-			<div id="example-1_tab-1" class="tab">
-				<p>If the Weinsteins play their cards -- and their title and dialogue cards -- right, "The Artist" could be the first hit silent film since, well, Mel Brooks' "Silent Movie"... if not since the actual early 1930s.</p>
-			</div>
-			<div id="example-1_tab-2" class="tab">
-				<p>If Olivia Wilde was cast against type in "Butter," double that for "Method's" Keira Knightley, whose spanked bottom, exposed nipples, and borderline-psychotic tantrums provide filmgoers not inherently fascinated by psychoanalytic theory a reason to check out David Cronenberg's otherwise pretty academic Freud/Jung biopic.</p>
-			</div>
-		</div>	
 	</p>
+	<div id="example-1-tabs">
+		<div id="example-1_tab-0" class="tab hidden">
+			<p>It's official: Telluride is George Clooney's town now. Everyone else -- Glenn Close, Tilda Swinton, Jennifer Garner, the dogs, the hippies, even the Lauren and Bush clans up in the mountains -- just lives in it.</p>
+		</div>
+		<div id="example-1_tab-1" class="tab">
+			<p>If the Weinsteins play their cards -- and their title and dialogue cards -- right, "The Artist" could be the first hit silent film since, well, Mel Brooks' "Silent Movie"... if not since the actual early 1930s.</p>
+		</div>
+		<div id="example-1_tab-2" class="tab">
+			<p>If Olivia Wilde was cast against type in "Butter," double that for "Method's" Keira Knightley, whose spanked bottom, exposed nipples, and borderline-psychotic tantrums provide filmgoers not inherently fascinated by psychoanalytic theory a reason to check out David Cronenberg's otherwise pretty academic Freud/Jung biopic.</p>
+		</div>
+	</div>	
+
 	<script type="text/javascript">
 		$(function(){
 			oExample1Switcher = new Switcher({
 				items: {
-					container: '#example-1-switcher',
-					valueSource: 'index'
+					container: '#example-1-switcher'
 				},
 				targets: {
-					container: '#example-1-tabs',
-					selector: '> div',
-					linkSource: 'id',
-					linkPrefix: 'example-1_tab-',
+					selector: '#example-1-tabs .tab'
 				},
 				action: {
-					type: 'setTargetsValueClass',
-					classPrefix: 'this-is-',
-					classSuffix: '-baby'
+					type: 'toggleTargetsClass',
+					addClass: 'not-hidden',
+					removeClass: 'hidden'
 				}
 			});
 		});
