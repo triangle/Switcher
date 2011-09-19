@@ -1,5 +1,5 @@
 /*
- * Switcher v0.16
+ * Switcher v0.17
  * 
  * Requires jQuery
  */
@@ -56,7 +56,7 @@ Switcher.Basic.prototype = {
 		
 		this._invokeCallbacks();
 	},
-	_clearSelectedItem: function(item){
+	_clearSelectedItem: function(){
 		if (this.selectedItem) {
 			this.prevSelectedItem  = this.selectedItem;
 			this.prevSelectedValue = this.selectedItem._value;
@@ -77,10 +77,19 @@ Switcher.Basic.prototype = {
 			this.selectCallback({ value: this.selectedValue });
 		}		
 	},
-
+	
+	click: function(item){
+		if (item.isSelected()) return;
+		
+		this.deselectSelectedItem();
+		
+		item.select();
+		this._setSelectedItem(item);
+	},
 	deselectSelectedItem: function(){
 		if (this.selectedItem) {
 			this.selectedItem.deselect();
+			this._clearSelectedItem();
 		}
 	},
 	deselectAllItems: function(){
@@ -98,19 +107,18 @@ Switcher.Basic.prototype = {
 }
 Switcher.SwitcherItem = function(options){
 	this._element = $(options.element);
-	this.switcher = options.switcher;
 	
 	this.options = options.itemsOptions;
 	
 	this._selectedClass = options.itemsOptions.selectedClass;
 	
-	this._setValue();
-	this._attachEvents();
+	this._setValue(options.switcher);
+	this._attachEvents(options.switcher);
 	
 }
 
 Switcher.SwitcherItem.prototype = {
-	_setValue: function(){
+	_setValue: function(switcher){
 		switch (true) {
 			case this.options.valueSource == 'id' || this.options.valueAttribute == 'id':
 			case this.options.valueSource == 'class' || this.options.valueAttribute == 'class':
@@ -124,27 +132,19 @@ Switcher.SwitcherItem.prototype = {
 				break;
 			
 			case this.options.valueSource == 'index':
-				this._value = this.switcher.items.length;
+				this._value = switcher.items.length;
 				break;
 		}
 	},
-	_attachEvents: function(){
-		this._element.click($.proxy(this.click, this));
+	_attachEvents: function(switcher){
+		this._element.click($.proxy(function(){ switcher.click(this) }, this));
 	},
 
-	click: function(event){
-		if (this.isSelected()) return;
-		
-		this.switcher.deselectSelectedItem();
-		this.select();
-	},
 	select: function(){
 		this._element.addClass(this._selectedClass);
-		this.switcher._setSelectedItem(this);
 	},
 	deselect: function(){
 		this._element.removeClass(this._selectedClass);
-		this.switcher._clearSelectedItem();
 	},
 
 	isSelected: function(){

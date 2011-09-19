@@ -48,7 +48,7 @@ Switcher.Basic.prototype = {
 		
 		this._invokeCallbacks();
 	},
-	_clearSelectedItem: function(item){
+	_clearSelectedItem: function(){
 		if (this.selectedItem) {
 			this.prevSelectedItem  = this.selectedItem;
 			this.prevSelectedValue = this.selectedItem._value;
@@ -69,10 +69,19 @@ Switcher.Basic.prototype = {
 			this.selectCallback({ value: this.selectedValue });
 		}		
 	},
-
+	
+	click: function(item){
+		if (item.isSelected()) return;
+		
+		this.deselectSelectedItem();
+		
+		item.select();
+		this._setSelectedItem(item);
+	},
 	deselectSelectedItem: function(){
 		if (this.selectedItem) {
 			this.selectedItem.deselect();
+			this._clearSelectedItem();
 		}
 	},
 	deselectAllItems: function(){
