@@ -1,5 +1,5 @@
 /*
- * Switcher v0.17
+ * Switcher v0.18
  * 
  * Requires jQuery
  */
@@ -47,14 +47,10 @@ Switcher.Basic.prototype = {
 		}
 	},
 	_setSelectedItem: function(item){
-		if (this.selectedItem) {
-			this.prevSelectedItem  = this.selectedItem;
-			this.prevSelectedValue = this.selectedItem._value;
-		}
+		this._clearSelectedItem();
+
 		this.selectedItem  = item;
 		this.selectedValue = item._value;
-		
-		this._invokeCallbacks();
 	},
 	_clearSelectedItem: function(){
 		if (this.selectedItem) {
@@ -65,10 +61,6 @@ Switcher.Basic.prototype = {
 		this.selectedValue = null
 	},
 	_invokeCallbacks: function(){
-		if (this._updateTargets) {
-			this._updateTargets();
-		}
-		
 		if (this.targets) {
 			this.targets.updateItems(this.selectedValue, this.prevSelectedValue);
 		}
@@ -85,11 +77,12 @@ Switcher.Basic.prototype = {
 		
 		item.select();
 		this._setSelectedItem(item);
+		
+		this._invokeCallbacks();
 	},
 	deselectSelectedItem: function(){
 		if (this.selectedItem) {
 			this.selectedItem.deselect();
-			this._clearSelectedItem();
 		}
 	},
 	deselectAllItems: function(){
@@ -109,8 +102,6 @@ Switcher.SwitcherItem = function(options){
 	this._element = $(options.element);
 	
 	this.options = options.itemsOptions;
-	
-	this._selectedClass = options.itemsOptions.selectedClass;
 	
 	this._setValue(options.switcher);
 	this._attachEvents(options.switcher);
@@ -141,14 +132,14 @@ Switcher.SwitcherItem.prototype = {
 	},
 
 	select: function(){
-		this._element.addClass(this._selectedClass);
+		this._element.addClass(this.options.selectedClass);
 	},
 	deselect: function(){
-		this._element.removeClass(this._selectedClass);
+		this._element.removeClass(this.options.selectedClass);
 	},
 
 	isSelected: function(){
-		return this._element.hasClass(this._selectedClass);
+		return this._element.hasClass(this.options.selectedClass);
 	}
 }
 Switcher.Targets = function(switcher, options){
