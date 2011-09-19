@@ -3,8 +3,6 @@ Switcher.SwitcherItem = function(options){
 	
 	this.options = options.itemsOptions;
 	
-	this._selectedClass = options.itemsOptions.selectedClass;
-	
 	this._setValue(options.switcher);
 	this._attachEvents(options.switcher);
 	
@@ -34,13 +32,13 @@ Switcher.SwitcherItem.prototype = {
 	},
 
 	select: function(){
-		this._element.addClass(this._selectedClass);
+		this._element.addClass(this.options.selectedClass);
 	},
 	deselect: function(){
-		this._element.removeClass(this._selectedClass);
+		this._element.removeClass(this.options.selectedClass);
 	},
 
 	isSelected: function(){
-		return this._element.hasClass(this._selectedClass);
+		return this._element.hasClass(this.options.selectedClass);
 	}
 }
