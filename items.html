@@ -96,5 +96,30 @@
 		<span class="code_important">selectedClass</span>: 'special-selected'
 	}
 });</pre>
+
+	<h1>Click-element ≠ switcher item</h1>
+	<p>
+		<span id="example-4-switcher" class="switcher switcher_tab-style">
+			<span class="switcher-item"><span class="pseudo">Read</span> <small>10</small></span>
+			<span class="switcher-item"><span class="pseudo">Unread</span> <small>52</small></span>
+			<span class="switcher-item"><span class="pseudo">Bread</span> <small>1</small></span>
+		</span>
+	</p>
+	<script type="text/javascript">
+		$(function(){
+			var oExample2Switcher = new Switcher({
+				items: {
+					selector: '#example-4-switcher .switcher-item',
+					clickElement: '.pseudo'
+				}
+			});
+		});
+	</script>
+	<pre class="code_with-important">var oExample2Switcher = new Switcher({
+	items: {
+		selector: '#example-4-switcher .switcher-item',
+		<span class="code_important">clickElement</span>: '.pseudo'
+	}
+});</pre>
 </body>
 </html>

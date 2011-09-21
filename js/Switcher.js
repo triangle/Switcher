@@ -135,7 +135,11 @@ Switcher.SwitcherItem.prototype = {
 		}
 	},
 	_attachEvents: function(switcher){
-		this._element.click($.proxy(function(){ switcher.click(this) }, this));
+		var clickElement = this._element;
+		if (this.options.clickElement) {
+			clickElement = this._element.find(this.options.clickElement);
+		}
+		clickElement.click($.proxy(function(){ switcher.click(this) }, this));
 	},
 
 	select: function(){
