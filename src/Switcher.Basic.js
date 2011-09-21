@@ -88,6 +88,7 @@ Switcher.Basic.prototype = {
 			this.items[i].deselect();
 		}
 	},
+
 	defaultOptions: {
 		items: {
 			selector: '.switcher-item',

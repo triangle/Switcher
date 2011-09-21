@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Switcher</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script type="text/javascript" src="js/Switcher.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/examples.css" />
+	</head>
+	<body>
+	<h1>Shortest example</h1>
+	<p>
+		<span id="example-1-switcher" class="switcher switcher_tab-style">
+			<span class="switcher-item"><span class="pseudo">Item 1</span></span>
+			<span class="switcher-item"><span class="pseudo">Item 2</span></span>
+			<span class="switcher-item"><span class="pseudo">Item3</span></span>
+		</span>
+	</p>
+	<script type="text/javascript">
+		$(function(){
+			oExample1Switcher = new Switcher({
+				items: '#example-1-switcher .switcher-item'
+			});
+		});
+	</script>
+	<pre class="code_with-important">var oExample1Switcher = <span class="code_important">new Switcher</span>({
+	<span class="code_important">items</span>: '#example-1-switcher .switcher-item'
+});</pre>
+
+	<h2>Exactly the same result</h2>
+	<pre class="code_with-important">var oExample1Switcher = new Switcher({
+	<span class="code_important">items</span>: {
+		<span class="code_important">selector</span>: '#example-1-switcher .switcher-item'
+	}
+});</pre>
+	
+	<h1>With container</h1>
+	<p>
+		<span id="example-2-switcher" class="switcher switcher_tab-style">
+			<span class="switcher-item"><span class="pseudo">Item 1</span></span>
+			<span class="switcher-item"><span class="pseudo">Item 2</span></span>
+			<span class="switcher-item"><span class="pseudo">Item3</span></span>
+		</span>
+	</p>
+	<script type="text/javascript">
+		$(function(){
+			var oExample2Switcher = new Switcher({
+				items: {
+					container: '#example-2-switcher',
+					selector: '.switcher-item'
+				}
+			});
+		});
+	</script>
+	<pre class="code_with-important">var oExample2Switcher = new Switcher({
+	items: {
+		<span class="code_important">container</span>: '#example-2-switcher',
+		selector: '.switcher-item'
+	}
+});</pre>
+	
+	<h1>Custom “selected” class</h1>
+	<style>
+		#example-3-switcher .special-selected {
+			background: #ddf3ff;
+			border: 1px solid #2a6593;
+			padding-left: 3px;
+			padding-right: 3px;
+		}
+		#example-3-switcher .special-selected .pseudo {
+			color: #000;
+			border: none;
+			cursor: auto;
+		}
+	</style>
+	<p>
+		<span id="example-3-switcher" class="switcher switcher_tab-style">
+			<span class="switcher-item"><span class="pseudo">Item 1</span></span>
+			<span class="switcher-item"><span class="pseudo">Item 2</span></span>
+			<span class="switcher-item"><span class="pseudo">Item3</span></span>
+		</span>
+	</p>
+	<script type="text/javascript">
+		$(function(){
+			var oExample3Switcher = new Switcher({
+				items: {
+					selector: '#example-3-switcher .switcher-item',
+					selectedClass: 'special-selected'
+				}
+			});
+		});
+	</script>
+	<pre class="code_with-important">var oExample3Switcher = new Switcher({
+	items: {
+		selector: '#example-3-switcher .switcher-item',
+		<span class="code_important">selectedClass</span>: 'special-selected'
+	}
+});</pre>
+</body>
+</html>
