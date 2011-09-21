@@ -1,5 +1,5 @@
 /*
- * Switcher v0.18
+ * Switcher v0.19
  * 
  * Requires jQuery
  */
@@ -62,16 +62,22 @@ Switcher.Basic.prototype = {
 	},
 	_invokeCallbacks: function(){
 		if (this.targets) {
-			this.targets.updateItems(this.selectedValue, this.prevSelectedValue);
+			this.targets.updateItems(this.selectedValue, this.prevSelectedValue, this);
 		}
 		
 		if (this.selectCallback) {
 			this.selectCallback({ value: this.selectedValue });
 		}		
 	},
+	_lock: function(){
+		this.isLocked = true;
+	},
+	_unlock: function(){
+		this.isLocked = false;
+	},
 	
 	click: function(item){
-		if (item.isSelected()) return;
+		if (this.isLocked || item.isSelected()) return;
 		
 		this.deselectSelectedItem();
 		
@@ -194,7 +200,7 @@ Switcher.Targets.prototype = {
 		}
 	},
 
-	updateItems: function(value, prevValue){
+	updateItems: function(value, prevValue, switcher){
 		switch(true) {
 			case this.options.actionType == 'toggleTargets':
 				this.items.not(this.oItems[value]).hide();
@@ -223,6 +229,16 @@ Switcher.Targets.prototype = {
 				this.items
 					.removeClass(prevValueClass)
 					.addClass(valueClass)
+				break;
+				
+			case this.options.actionType == 'fade':
+				if (this.oItems[prevValue]) {
+					switcher._lock();
+					this.oItems[prevValue].fadeOut($.proxy(function(){
+						this.oItems[value].fadeIn($.proxy(switcher, "_unlock"));
+					}, this));
+				}
+				break;
 		}
 	}
 }

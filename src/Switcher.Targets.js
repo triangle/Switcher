@@ -50,7 +50,7 @@ Switcher.Targets.prototype = {
 		}
 	},
 
-	updateItems: function(value, prevValue){
+	updateItems: function(value, prevValue, switcher){
 		switch(true) {
 			case this.options.actionType == 'toggleTargets':
 				this.items.not(this.oItems[value]).hide();
@@ -79,6 +79,16 @@ Switcher.Targets.prototype = {
 				this.items
 					.removeClass(prevValueClass)
 					.addClass(valueClass)
+				break;
+				
+			case this.options.actionType == 'fade':
+				if (this.oItems[prevValue]) {
+					switcher._lock();
+					this.oItems[prevValue].fadeOut($.proxy(function(){
+						this.oItems[value].fadeIn($.proxy(switcher, "_unlock"));
+					}, this));
+				}
+				break;
 		}
 	}
 }

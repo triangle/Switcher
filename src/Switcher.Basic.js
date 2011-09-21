@@ -54,16 +54,22 @@ Switcher.Basic.prototype = {
 	},
 	_invokeCallbacks: function(){
 		if (this.targets) {
-			this.targets.updateItems(this.selectedValue, this.prevSelectedValue);
+			this.targets.updateItems(this.selectedValue, this.prevSelectedValue, this);
 		}
 		
 		if (this.selectCallback) {
 			this.selectCallback({ value: this.selectedValue });
 		}		
 	},
+	_lock: function(){
+		this.isLocked = true;
+	},
+	_unlock: function(){
+		this.isLocked = false;
+	},
 	
 	click: function(item){
-		if (item.isSelected()) return;
+		if (this.isLocked || item.isSelected()) return;
 		
 		this.deselectSelectedItem();
 		

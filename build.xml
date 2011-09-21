@@ -8,7 +8,7 @@
 				<file name="Switcher.Basic.js" />
 				<file name="Switcher.SwitcherItem.js" />
 				<file name="Switcher.Targets.js" />
-				<file name="Switcher.utils.js" />	
+				<file name="Switcher.utils.js" />
 			</filelist>
 		</concat>
 	</target>
