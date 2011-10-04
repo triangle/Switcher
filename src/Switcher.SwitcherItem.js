@@ -28,11 +28,11 @@ Switcher.SwitcherItem.prototype = {
 		}
 	},
 	_attachEvents: function(switcher){
-		var clickElement = this._element;
+		var actionElement = this._element;
 		if (this.options.clickElement) {
-			clickElement = this._element.find(this.options.clickElement);
+			actionElement = this._element.find(this.options.actionElement);
 		}
-		clickElement.click($.proxy(function(){ switcher.click(this) }, this));
+		actionElement.click($.proxy(function(){ switcher.click(this) }, this));
 	},
 
 	select: function(){
