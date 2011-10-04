@@ -68,8 +68,8 @@
 					valueSource: 'class',
 					valuePrefix: 'value_'
 				},
-				selectCallback: function(data){
-					$("#example-1-value-display").html('switcher\'s value is ' + data.value);
+				onSelect: function(){
+					$("#example-1-value-display").html('switcher\'s value is ' + this.selectedValue);
 				}
 			});
 		});

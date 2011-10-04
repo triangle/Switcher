@@ -1,5 +1,5 @@
 /*
- * Switcher v0.23
+ * Switcher v0.24
  * 
  * Requires jQuery
  */
@@ -41,8 +41,8 @@ Switcher.Basic.prototype = {
 		});
 	},
 	_attachCallback: function(){
-		if (this.options.selectCallback && typeof this.options.selectCallback === 'function') {
-			this.selectCallback = this.options.selectCallback;
+		if (this.options.onSelect && typeof this.options.onSelect === 'function') {
+			this.onSelect = $.proxy(this.options.onSelect, this);
 		}
 	},
 	_setSelectedItem: function(item){
@@ -64,8 +64,8 @@ Switcher.Basic.prototype = {
 			this.targets.updateItems(this.selectedValue, this.prevSelectedValue, this);
 		}
 		
-		if (this.selectCallback) {
-			this.selectCallback({ value: this.selectedValue });
+		if (this.onSelect) {
+			this.onSelect();
 		}		
 	},
 	_lock: function(){
