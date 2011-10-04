@@ -67,7 +67,7 @@ Switcher.Basic.prototype = {
 		this.isLocked = false;
 	},
 	
-	click: function(item){
+	action: function(item){
 		if (this.isLocked || item.isSelected()) return;
 		
 		this.deselectSelectedItem();
@@ -94,7 +94,7 @@ Switcher.Basic.prototype = {
 			selector: '.switcher-item',
 			selectedClass: 'switcher-item_selected',
 			valueSource: 'index',
-			actionEvent: 'click'
+			event: 'click'
 		}
 	}
 }

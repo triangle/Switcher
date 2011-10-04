@@ -1,5 +1,5 @@
 /*
- * Switcher v0.22
+ * Switcher v0.23
  * 
  * Requires jQuery
  */
@@ -75,7 +75,7 @@ Switcher.Basic.prototype = {
 		this.isLocked = false;
 	},
 	
-	click: function(item){
+	action: function(item){
 		if (this.isLocked || item.isSelected()) return;
 		
 		this.deselectSelectedItem();
@@ -102,7 +102,7 @@ Switcher.Basic.prototype = {
 			selector: '.switcher-item',
 			selectedClass: 'switcher-item_selected',
 			valueSource: 'index',
-			actionEvent: 'click'
+			event: 'click'
 		}
 	}
 }
@@ -136,11 +136,11 @@ Switcher.SwitcherItem.prototype = {
 		}
 	},
 	_attachEvents: function(switcher){
-		var actionElement = this._element;
-		if (this.options.clickElement) {
-			actionElement = this._element.find(this.options.actionElement);
+		var eventElement = this._element;
+		if (this.options.eventElement) {
+			eventElement = this._element.find(this.options.eventElement);
 		}
-		actionElement.click($.proxy(function(){ switcher.click(this) }, this));
+		eventElement[this.options.event]($.proxy(function(){ switcher.action(this) }, this));
 	},
 
 	select: function(){
