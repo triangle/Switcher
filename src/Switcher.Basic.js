@@ -4,8 +4,7 @@ Switcher.Basic = function(options){
 			selector: options.items
 		}
 	}
-	this.options = $.extend(true, {}, this.defaultOptions, options);
-	this.options.items.container = this.options.items.container || ''; 
+	this.options = $.extend(true, {}, this.defaultOptions, options); 
 	
 	this._findItems();
 	this._attachCallback();
@@ -91,9 +90,11 @@ Switcher.Basic.prototype = {
 
 	defaultOptions: {
 		items: {
+			container: '',
 			selector: '.switcher-item',
 			selectedClass: 'switcher-item_selected',
-			valueSource: 'index'
+			valueSource: 'index',
+			actionEvent: 'click'
 		}
 	}
 }
