@@ -19,7 +19,9 @@ Switcher.Basic.prototype = {
 		var oThis = this;
 		this.items = [];
 		
-		$(this.options.items.container + ' ' + this.options.items.selector).each(function(){
+		this.jItems = $(this.options.items.container + ' ' + this.options.items.selector) 
+		
+		this.jItems.each(function(){
 			var newItem = new Switcher.SwitcherItem({
 				element: this,
 				switcher: oThis,

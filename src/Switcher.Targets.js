@@ -17,14 +17,14 @@ Switcher.Targets = function(switcher, options){
 Switcher.Targets.prototype = {
 	_findItems: function(switcherItems){
 		if (this.options.selector) {
-			this.items = $(this.options.container + ' ' + this.options.selector);
+			this.jItems = $(this.options.container + ' ' + this.options.selector);
 			this.oItems = {};
 			
 			for (var i = 0, len = switcherItems.length; i < len; i++){
 				this.oItems[switcherItems[i]._value] = this._getItemsByValue(switcherItems[i]._value);
 			}
 		} else {
-			this.items = $(this.options.container);
+			this.jItems = $(this.options.container);
 		}
 	},
 	_getItemsByValue: function(value){
@@ -32,20 +32,20 @@ Switcher.Targets.prototype = {
 
 		switch (true) {
 			case this.options.linkSource == 'id' || this.options.linkAttribute == 'id':
-				return this.items.filter('#' + selector);
+				return this.jItems.filter('#' + selector);
 				break;
 
 			case this.options.linkSource == 'class' || this.options.linkAttribute == 'class':
-				return this.items.filter('.' + selector);
+				return this.jItems.filter('.' + selector);
 				break;
 
 			case this.options.linkSource == 'attribute' || (this.options.linkAttribute !== undefined && this.options.linkAttribute != ''):
-				return this.items.filter('[' + this.options.linkAttribute + '~="' + selector + '"]');
+				return this.jItems.filter('[' + this.options.linkAttribute + '~="' + selector + '"]');
 				break;
 			
 			case this.options.linkSource == 'index':
 			default:
-				return this.items.eq(value);
+				return this.jItems.eq(value);
 				break;
 		}
 	},
@@ -53,7 +53,7 @@ Switcher.Targets.prototype = {
 	updateItems: function(value, prevValue, switcher){
 		switch(true) {
 			case this.options.actionType == 'toggleTargets':
-				this.items.not(this.oItems[value]).hide();
+				this.jItems.not(this.oItems[value]).hide();
 				this.oItems[value].show();
 				break;
 				
@@ -76,7 +76,7 @@ Switcher.Targets.prototype = {
 					prevValueClass = classPrefix + prevValue + classSuffix,
 					valueClass = classPrefix + value + classSuffix;
 			
-				this.items
+				this.jItems
 					.removeClass(prevValueClass)
 					.addClass(valueClass)
 				break;
