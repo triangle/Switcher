@@ -52,12 +52,12 @@ Switcher.Targets.prototype = {
 
 	updateItems: function(value, prevValue, switcher){
 		switch(true) {
-			case this.options.actionType == 'toggleTargets':
+			case this.options.actionType == 'toggle':
 				this.jItems.not(this.oItems[value]).hide();
 				this.oItems[value].show();
 				break;
 				
-			case this.options.actionType == 'toggleTargetsClass':
+			case this.options.actionType == 'toggleClass':
 				if (prevValue !== undefined && this.switcher.options.action.addClass)
 					this.oItems[prevValue].removeClass(this.switcher.options.action.addClass);
 				if (prevValue !== undefined && this.switcher.options.action.removeClass)
@@ -69,7 +69,7 @@ Switcher.Targets.prototype = {
 					this.oItems[value].addClass(this.switcher.options.action.addClass);
 				break;
 				
-			case this.options.actionType == 'setTargetsValueClass':
+			case this.options.actionType == 'setValueClass':
 				var
 					classPrefix = this.switcher.options.action.classPrefix || '',
 					classSuffix = this.switcher.options.action.classSuffix || '',
