@@ -1,5 +1,5 @@
 /*
- * Switcher v0.26
+ * Switcher v0.27
  * 
  * Requires jQuery
  */
@@ -142,7 +142,14 @@ Switcher.SwitcherItem.prototype = {
 		if (this.options.eventElement) {
 			eventElement = this._element.find(this.options.eventElement);
 		}
-		eventElement[this.options.event]($.proxy(function(){ switcher.action(this) }, this));
+		eventElement[this.options.event](
+			$.proxy(function(e){
+				if (switcher.options.action === undefined || switcher.options.action.preventDefault != false) {
+					e.preventDefault();
+				}
+				switcher.action(this);
+			}, this)
+		);
 	},
 
 	select: function(){
