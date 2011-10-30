@@ -1,5 +1,5 @@
 /*
- * Switcher v0.28
+ * Switcher v0.29
  * 
  * Requires jQuery
  */
@@ -249,8 +249,8 @@ Switcher.Targets.prototype = {
 			case this.options.actionType == 'fade':
 				if (this.oItems[prevValue]) {
 					switcher._lock();
-					this.oItems[prevValue].fadeOut($.proxy(function(){
-						this.oItems[value].fadeIn($.proxy(switcher, "_unlock"));
+					this.oItems[prevValue].fadeOut(switcher.options.action.fadeDuration, switcher.options.action.fadeEasing, $.proxy(function(){
+						this.oItems[value].fadeIn(switcher.options.action.fadeDuration, switcher.options.action.fadeEasing, $.proxy(switcher, "_unlock"));
 					}, this));
 				}
 				break;

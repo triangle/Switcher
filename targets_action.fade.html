@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Switcher</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script type="text/javascript" src="js/Switcher.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/examples.css" />
+	</head>
+	<body>
+		<p>
+			<span id="example-1-switcher" class="switcher switcher_tab-style">
+				<span class="switcher-item selected"><span class="pseudo">Tab 1</span></span>
+				<span class="switcher-item"><span class="pseudo">Tab 2</span></span>
+				<span class="switcher-item"><span class="pseudo">Tab 3</span></span>
+			</span>
+		</p>
+		<div id="example-1-tabs">
+			<div class="tab">
+				<p>It's official: Telluride is George Clooney's town now. Everyone else -- Glenn Close, Tilda Swinton, Jennifer Garner, the dogs, the hippies, even the Lauren and Bush clans up in the mountains -- just lives in it.</p>
+			</div>
+			<div class="tab" style="display:none">
+				<p>If the Weinsteins play their cards -- and their title and dialogue cards -- right, "The Artist" could be the first hit silent film since, well, Mel Brooks' "Silent Movie"... if not since the actual early 1930s.</p>
+			</div>
+			<div class="tab" style="display:none">
+				<p>If Olivia Wilde was cast against type in "Butter," double that for "Method's" Keira Knightley, whose spanked bottom, exposed nipples, and borderline-psychotic tantrums provide filmgoers not inherently fascinated by psychoanalytic theory a reason to check out David Cronenberg's otherwise pretty academic Freud/Jung biopic.</p>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			$(function(){
+				var oExample1Switcher = new Switcher({
+					items: '#example-1-switcher .switcher-item',
+					targets: '#example-1-tabs .tab',
+					action: {
+						type: 'fade',
+						fadeDuration: 250,
+						fadeEasing: 'linear'
+					}
+				});
+			});
+		</script>
+	<pre class="code_with-important">oExample1Switcher = new Switcher({
+	items: '#example-1-switcher .switcher-item',
+	targets: '#example-1-tabs .tab',
+	action: {
+		type: 'fade',
+		<span class="code_important">fadeDuration</span>: 250,
+		<span class="code_important">fadeEasing</span>: 'linear'
+	}
+});</pre>
+	</body>
+</html>
