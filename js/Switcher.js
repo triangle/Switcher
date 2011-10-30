@@ -1,5 +1,5 @@
 /*
- * Switcher v0.27
+ * Switcher v0.28
  * 
  * Requires jQuery
  */
@@ -102,7 +102,7 @@ Switcher.Basic.prototype = {
 		items: {
 			container: '',
 			selector: '.switcher-item',
-			selectedClass: 'switcher-item_selected',
+			selectedClass: 'selected',
 			valueSource: 'index',
 			event: 'click'
 		}
