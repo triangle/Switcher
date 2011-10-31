@@ -51,10 +51,11 @@ Switcher.Targets.prototype = {
 	},
 
 	updateItems: function(value, prevValue, switcher){
+		console.log(this);
+		
 		switch(true) {
 			case this.options.actionType == 'toggle':
-				this.jItems.not(this.oItems[value]).hide();
-				this.oItems[value].show();
+				this.actions.toggle.execute(value, prevValue);
 				break;
 				
 			case this.options.actionType == 'toggleClass':
@@ -89,6 +90,28 @@ Switcher.Targets.prototype = {
 					}, this));
 				}
 				break;
+		}
+	},
+	
+	itemActionReverse: function(value) {
+		$.proxy(this.actions[this.options.actionType].reverse, this)(value);
+	},
+	itemActionForward: function(value) {
+		$.proxy(this.actions[this.options.actionType].forward, this)(value);
+	},
+	
+	actions: {
+		toggle: {
+			execute: function(value, prevValue) {
+				this.actions.toogle.reverse(prevValue);
+				this.actions.toogle.forward(value);
+			},
+			reverse: function(value) {
+				this.oItems[value].hide();
+			},
+			forward: function(value) {
+				this.oItems[value].show();
+			}
 		}
 	}
 }

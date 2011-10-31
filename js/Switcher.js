@@ -1,5 +1,5 @@
 /*
- * Switcher v0.29
+ * Switcher v0.3
  * 
  * Requires jQuery
  */
@@ -78,14 +78,30 @@ Switcher.Basic.prototype = {
 	},
 	
 	action: function(item){
-		if (this.isLocked || item.isSelected()) return;
-		
-		this.deselectSelectedItem();
-		
-		item.select();
-		this._setSelectedItem(item);
-		
-		this._invokeCallbacks();
+		if (!this.options.multiselect) {
+			if (this.isLocked || item.isSelected()) return;
+			
+			this.deselectSelectedItem();
+			
+			item.select();
+			this._setSelectedItem(item);
+			
+			this._invokeCallbacks();
+		} else {
+			if (this.isLocked) return;
+			
+			if (item.isSelected()) {
+				item.deselect();
+				if (this.targets) {
+					this.targets.itemActionReverse(item._value);
+				}
+			} else {
+				item.select();
+				if (this.targets) {
+					this.targets.itemActionForward(item._value);
+				}
+			}
+		}
 	},
 	deselectSelectedItem: function(){
 		if (this.selectedItem) {
@@ -105,7 +121,8 @@ Switcher.Basic.prototype = {
 			selectedClass: 'selected',
 			valueSource: 'index',
 			event: 'click'
-		}
+		},
+		multiselect: false
 	}
 }
 Switcher.SwitcherItem = function(options){
@@ -216,10 +233,11 @@ Switcher.Targets.prototype = {
 	},
 
 	updateItems: function(value, prevValue, switcher){
+		console.log(this);
+		
 		switch(true) {
 			case this.options.actionType == 'toggle':
-				this.jItems.not(this.oItems[value]).hide();
-				this.oItems[value].show();
+				this.actions.toggle.execute(value, prevValue);
 				break;
 				
 			case this.options.actionType == 'toggleClass':
@@ -254,6 +272,28 @@ Switcher.Targets.prototype = {
 					}, this));
 				}
 				break;
+		}
+	},
+	
+	itemActionReverse: function(value) {
+		$.proxy(this.actions[this.options.actionType].reverse, this)(value);
+	},
+	itemActionForward: function(value) {
+		$.proxy(this.actions[this.options.actionType].forward, this)(value);
+	},
+	
+	actions: {
+		toggle: {
+			execute: function(value, prevValue) {
+				this.actions.toogle.reverse(prevValue);
+				this.actions.toogle.forward(value);
+			},
+			reverse: function(value) {
+				this.oItems[value].hide();
+			},
+			forward: function(value) {
+				this.oItems[value].show();
+			}
 		}
 	}
 }
