@@ -46,7 +46,7 @@
 			}
 		</style>
 		
-		<h1>Multiselect example 1 (‘toggleClass’ action)</h1>
+		<h1>Multiselect example 2 (‘toggleClass’ action)</h1>
 		<p>
 			<span id="example-2-switcher" class="switcher switcher_tab-style switcher_multiselect">
 				<span class="switcher-item"><span class="pseudo">Select item 1</span></span>
@@ -69,6 +69,53 @@
 					action: {
 						type: 'toggleClass',
 						addClass: 'target-item_selected'
+					},
+					multiselect: true
+				});
+			});
+		</script>
+		
+		<style>
+			#example-3 {
+				padding: 10px;
+				float: left;
+			}
+			.example-3_background {
+				background: silver;
+			}
+			.example-3_border {
+				border: 2px solid gray;
+				border-radius: 5px;
+			}
+			.example-3_shadow {
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+			}
+		</style>
+		
+
+		<h1>Multiselect example 3 (‘setValueClass’ action)</h1>
+		<p>
+			<span id="example-3-switcher" class="switcher switcher_tab-style switcher_multiselect">
+				<span class="switcher-item add_background"><span class="pseudo">Background</span></span>
+				<span class="switcher-item add_border"><span class="pseudo">Border</span></span>
+				<span class="switcher-item add_shadow"><span class="pseudo">Shadow</span></span>
+			</span>
+		</p>
+		
+		<div id="example-3">Box</div>
+		
+		<script type="text/javascript">
+			$(function(){
+				oExample2Switcher = new Switcher({
+					items: {
+						selector: '#example-3-switcher .switcher-item',
+						valueSource: 'class',
+						valuePrefix: 'add_'
+					},
+					targets: '#example-3',
+					action: {
+						type: 'setValueClass',
+						classPrefix: 'example-3_'
 					},
 					multiselect: true
 				});
