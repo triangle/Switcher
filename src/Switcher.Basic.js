@@ -70,14 +70,30 @@ Switcher.Basic.prototype = {
 	},
 	
 	action: function(item){
-		if (this.isLocked || item.isSelected()) return;
-		
-		this.deselectSelectedItem();
-		
-		item.select();
-		this._setSelectedItem(item);
-		
-		this._invokeCallbacks();
+		if (!this.options.multiselect) {
+			if (this.isLocked || item.isSelected()) return;
+			
+			this.deselectSelectedItem();
+			
+			item.select();
+			this._setSelectedItem(item);
+			
+			this._invokeCallbacks();
+		} else {
+			if (this.isLocked) return;
+			
+			if (item.isSelected()) {
+				item.deselect();
+				if (this.targets) {
+					this.targets.itemActionReverse(item._value);
+				}
+			} else {
+				item.select();
+				if (this.targets) {
+					this.targets.itemActionForward(item._value);
+				}
+			}
+		}
 	},
 	deselectSelectedItem: function(){
 		if (this.selectedItem) {
@@ -96,6 +112,7 @@ Switcher.Basic.prototype = {
 			selectedClass: 'selected',
 			valueSource: 'index',
 			event: 'click'
-		}
+		},
+		multiselect: false
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Switcher v0.29
+ * Switcher v0.33
  * 
  * Requires jQuery
  */
@@ -78,14 +78,30 @@ Switcher.Basic.prototype = {
 	},
 	
 	action: function(item){
-		if (this.isLocked || item.isSelected()) return;
-		
-		this.deselectSelectedItem();
-		
-		item.select();
-		this._setSelectedItem(item);
-		
-		this._invokeCallbacks();
+		if (!this.options.multiselect) {
+			if (this.isLocked || item.isSelected()) return;
+			
+			this.deselectSelectedItem();
+			
+			item.select();
+			this._setSelectedItem(item);
+			
+			this._invokeCallbacks();
+		} else {
+			if (this.isLocked) return;
+			
+			if (item.isSelected()) {
+				item.deselect();
+				if (this.targets) {
+					this.targets.itemActionReverse(item._value);
+				}
+			} else {
+				item.select();
+				if (this.targets) {
+					this.targets.itemActionForward(item._value);
+				}
+			}
+		}
 	},
 	deselectSelectedItem: function(){
 		if (this.selectedItem) {
@@ -104,7 +120,8 @@ Switcher.Basic.prototype = {
 			selectedClass: 'selected',
 			valueSource: 'index',
 			event: 'click'
-		}
+		},
+		multiselect: false
 	}
 }
 Switcher.SwitcherItem = function(options){
@@ -211,42 +228,77 @@ Switcher.Targets.prototype = {
 	updateItems: function(value, prevValue, switcher){
 		switch(true) {
 			case this.options.actionType == 'toggle':
-				this.jItems.not(this.oItems[value]).hide();
-				this.oItems[value].show();
-				break;
-				
 			case this.options.actionType == 'toggleClass':
-				if (prevValue !== undefined && this.switcher.options.action.addClass)
-					this.oItems[prevValue].removeClass(this.switcher.options.action.addClass);
-				if (prevValue !== undefined && this.switcher.options.action.removeClass)
-					this.oItems[prevValue].addClass(this.switcher.options.action.removeClass);
-
-				if (this.switcher.options.action.removeClass)
-					this.oItems[value].removeClass(this.switcher.options.action.removeClass);
-				if (this.switcher.options.action.addClass)
-					this.oItems[value].addClass(this.switcher.options.action.addClass);
-				break;
-				
 			case this.options.actionType == 'setValueClass':
-				var
-					classPrefix = this.switcher.options.action.classPrefix || '',
-					classSuffix = this.switcher.options.action.classSuffix || '',
-					prevValueClass = classPrefix + prevValue + classSuffix,
-					valueClass = classPrefix + value + classSuffix;
-			
-				this.jItems
-					.removeClass(prevValueClass)
-					.addClass(valueClass)
+				var execute = this.actions[this.options.actionType].execute;
+				if (execute && typeof execute === 'function') {
+					execute(value, prevValue);
+				} else {
+					this.itemActionReverse(prevValue);
+					this.itemActionForward(value);
+				}
 				break;
 				
 			case this.options.actionType == 'fade':
-				if (this.oItems[prevValue]) {
-					switcher._lock();
-					this.oItems[prevValue].fadeOut(switcher.options.action.fadeDuration, switcher.options.action.fadeEasing, $.proxy(function(){
-						this.oItems[value].fadeIn(switcher.options.action.fadeDuration, switcher.options.action.fadeEasing, $.proxy(switcher, "_unlock"));
-					}, this));
-				}
+				$.proxy(this.actions.fade.reverse, this)(prevValue,	function(){
+					$.proxy(switcher.targets.actions.fade.forward, switcher.targets)(value);
+				});
 				break;
+		}
+	},
+	
+	itemActionReverse: function(value) {
+		$.proxy(this.actions[this.options.actionType].reverse, this)(value);
+	},
+	itemActionForward: function(value) {
+		$.proxy(this.actions[this.options.actionType].forward, this)(value);
+	},
+	
+	actions: {
+		toggle: {
+			reverse: function(value) {
+				this.oItems[value].hide();
+			},
+			forward: function(value) {
+				this.oItems[value].show();
+			}
+		},
+		
+		toggleClass: {
+			reverse: function(value) {
+				this.actions.toggleClass._helper(this.oItems[value], this.switcher.options.action.addClass, this.switcher.options.action.removeClass);
+			},
+			forward: function(value) {
+				this.actions.toggleClass._helper(this.oItems[value], this.switcher.options.action.removeClass, this.switcher.options.action.addClass);
+			},
+			_helper: function(items, removeClass, addClass) {
+				if (items && removeClass) items.removeClass(removeClass);
+				if (items && addClass)items.addClass(addClass);
+			}
+		},
+		
+		setValueClass: {
+			reverse: function(value) {
+				this.jItems.removeClass((this.switcher.options.action.classPrefix || '') + value + (this.switcher.options.action.classSuffix || ''));
+			},
+			forward: function(value) {
+				this.jItems.addClass((this.switcher.options.action.classPrefix || '') + value + (this.switcher.options.action.classSuffix || ''));
+			} 
+		},
+		
+		fade: {
+			reverse: function(value, callback) {
+				if (this.oItems[value]) {
+					this.switcher._lock();
+					this.oItems[value].fadeOut(this.switcher.options.action.fadeDuration, this.switcher.options.action.fadeEasing, callback || $.proxy(this.switcher, "_unlock"));
+				}
+			},
+			forward: function(value) {
+				if (this.oItems[value]) {
+					this.switcher._lock();
+					this.oItems[value].fadeIn(this.switcher.options.action.fadeDuration, this.switcher.options.action.fadeEasing, $.proxy(this.switcher, "_unlock"));
+				}
+			}
 		}
 	}
 }

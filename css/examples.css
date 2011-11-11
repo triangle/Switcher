@@ -2,7 +2,8 @@
 	font-weight: bold;
 }
 
-.pseudo {
+.pseudo,
+.switcher_multiselect .switcher-item.selected .pseudo {
 	border-bottom: 1px dotted;
 	color: MediumBlue;
 	cursor: pointer;
@@ -27,6 +28,14 @@
 }
 .switcher_tab-style .switcher-item.selected .pseudo {
 	color: #fff;
+}
+
+
+.switcher_multiselect .switcher-item.selected {
+	background: #ccc;
+}
+.switcher_multiselect .switcher-item.selected .pseudo {
+	color: MediumBlue;
 }
 
 
