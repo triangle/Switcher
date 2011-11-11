@@ -236,6 +236,7 @@ Switcher.Targets.prototype = {
 		switch(true) {
 			case this.options.actionType == 'toggle':
 			case this.options.actionType == 'toggleClass':
+			case this.options.actionType == 'setValueClass':
 				var execute = this.actions[this.options.actionType].execute;
 				if (execute && typeof execute === 'function') {
 					execute(value, prevValue);
@@ -243,18 +244,6 @@ Switcher.Targets.prototype = {
 					this.itemActionReverse(prevValue);
 					this.itemActionForward(value);
 				}
-				break;
-				
-			case this.options.actionType == 'setValueClass':
-				var
-					classPrefix = this.switcher.options.action.classPrefix || '',
-					classSuffix = this.switcher.options.action.classSuffix || '',
-					prevValueClass = classPrefix + prevValue + classSuffix,
-					valueClass = classPrefix + value + classSuffix;
-			
-				this.jItems
-					.removeClass(prevValueClass)
-					.addClass(valueClass)
 				break;
 				
 			case this.options.actionType == 'fade':
@@ -296,6 +285,15 @@ Switcher.Targets.prototype = {
 				if (items && removeClass) items.removeClass(removeClass);
 				if (items && addClass)items.addClass(addClass);
 			}
+		},
+		
+		setValueClass: {
+			reverse: function(value) {
+				this.jItems.removeClass((this.switcher.options.action.classPrefix || '') + value + (this.switcher.options.action.classSuffix || ''));
+			},
+			forward: function(value) {
+				this.jItems.addClass((this.switcher.options.action.classPrefix || '') + value + (this.switcher.options.action.classSuffix || ''));
+			} 
 		}
 	}
 }
