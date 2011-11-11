@@ -124,6 +124,7 @@ Switcher.Basic.prototype = {
 		multiselect: false
 	}
 }
+
 Switcher.SwitcherItem = function(options){
 	this._element = $(options.element);
 	
@@ -302,6 +303,7 @@ Switcher.Targets.prototype = {
 		}
 	}
 }
+
 Switcher.utils = {
 	extend: function extend(subClass, superClass) {
 	  var F = function() {};
