@@ -19,7 +19,7 @@ Switcher.Basic.prototype = {
 		var oThis = this;
 		this.items = [];
 		
-		this.jItems = $(this.options.items.container + ' ' + this.options.items.selector) 
+		this.jItems = $(this.options.items.selector); 
 		
 		this.jItems.each(function(){
 			var newItem = new Switcher.SwitcherItem({
@@ -92,7 +92,6 @@ Switcher.Basic.prototype = {
 
 	defaultOptions: {
 		items: {
-			container: '',
 			selector: '.switcher-item',
 			selectedClass: 'selected',
 			valueSource: 'index',

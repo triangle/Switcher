@@ -6,7 +6,7 @@
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 		<script type="text/javascript" src="js/Switcher.js"></script>
 		<style type="text/css">
-			.switcher-item_selected {
+			.switcher-item.selected {
 				font-weight: bold;
 			}
 			
@@ -16,7 +16,7 @@
 				cursor: pointer;
 			}
 			
-			.switcher-item_selected .pseudo {
+			.switcher-item.selected .pseudo {
 				border: none;
 				color: #000;
 				cursor: auto;
@@ -28,12 +28,12 @@
 			.switcher_tab-style .switcher-item {
 				padding: 2px 4px;
 			}
-			.switcher_tab-style .switcher-item_selected {
+			.switcher_tab-style .switcher-item.selected {
 				color: #fff;
 				background: #000;
 				font-weight: normal;
 			}
-			.switcher_tab-style .switcher-item_selected .pseudo {
+			.switcher_tab-style .switcher-item.selected .pseudo {
 				color: #fff;
 			}
 
@@ -162,7 +162,7 @@
 		$(function(){
 			oExample3Switcher = new Switcher({
 				items: {
-					container: '#example-3-switcher',
+					selector: '#example-3-switcher .switcher-item',
 					valueSource: 'class',
 					valuePrefix: 'v_'
 				},
@@ -171,7 +171,7 @@
 					selector: '.property-box',
 					linkSource: 'class'
 				},
-				action: 'toggleTargets'
+				action: 'toggle'
 			});
 		});
 	</script>

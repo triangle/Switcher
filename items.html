@@ -34,7 +34,20 @@
 	}
 });</pre>
 	
-	<h1>With container</h1>
+	<h1>Custom “selected” class</h1>
+	<style>
+		#example-2-switcher .special-selected {
+			background: #ddf3ff;
+			border: 1px solid #2a6593;
+			padding-left: 3px;
+			padding-right: 3px;
+		}
+		#example-2switcher .special-selected .pseudo {
+			color: #000;
+			border: none;
+			cursor: auto;
+		}
+	</style>
 	<p>
 		<span id="example-2-switcher" class="switcher switcher_tab-style">
 			<span class="switcher-item"><span class="pseudo">Item 1</span></span>
@@ -46,45 +59,7 @@
 		$(function(){
 			var oExample2Switcher = new Switcher({
 				items: {
-					container: '#example-2-switcher',
-					selector: '.switcher-item'
-				}
-			});
-		});
-	</script>
-	<pre class="code_with-important">var oExample2Switcher = new Switcher({
-	items: {
-		<span class="code_important">container</span>: '#example-2-switcher',
-		selector: '.switcher-item'
-	}
-});</pre>
-	
-	<h1>Custom “selected” class</h1>
-	<style>
-		#example-3-switcher .special-selected {
-			background: #ddf3ff;
-			border: 1px solid #2a6593;
-			padding-left: 3px;
-			padding-right: 3px;
-		}
-		#example-3-switcher .special-selected .pseudo {
-			color: #000;
-			border: none;
-			cursor: auto;
-		}
-	</style>
-	<p>
-		<span id="example-3-switcher" class="switcher switcher_tab-style">
-			<span class="switcher-item"><span class="pseudo">Item 1</span></span>
-			<span class="switcher-item"><span class="pseudo">Item 2</span></span>
-			<span class="switcher-item"><span class="pseudo">Item3</span></span>
-		</span>
-	</p>
-	<script type="text/javascript">
-		$(function(){
-			var oExample3Switcher = new Switcher({
-				items: {
-					selector: '#example-3-switcher .switcher-item',
+					selector: '#example-2-switcher .switcher-item',
 					selectedClass: 'special-selected'
 				}
 			});
@@ -92,14 +67,14 @@
 	</script>
 	<pre class="code_with-important">var oExample3Switcher = new Switcher({
 	items: {
-		selector: '#example-3-switcher .switcher-item',
+		selector: '#example-2-switcher .switcher-item',
 		<span class="code_important">selectedClass</span>: 'special-selected'
 	}
 });</pre>
 
 	<h1>Click-element ≠ switcher item</h1>
 	<p>
-		<span id="example-4-switcher" class="switcher switcher_tab-style">
+		<span id="example-3-switcher" class="switcher switcher_tab-style">
 			<span class="switcher-item"><span class="pseudo">Read</span> <small>10</small></span>
 			<span class="switcher-item"><span class="pseudo">Unread</span> <small>52</small></span>
 			<span class="switcher-item"><span class="pseudo">Bread</span> <small>1</small></span>
@@ -107,9 +82,9 @@
 	</p>
 	<script type="text/javascript">
 		$(function(){
-			var oExample2Switcher = new Switcher({
+			var oExample3Switcher = new Switcher({
 				items: {
-					selector: '#example-4-switcher .switcher-item',
+					selector: '#example-3-switcher .switcher-item',
 					eventElement: '.pseudo'
 				}
 			});
@@ -117,7 +92,7 @@
 	</script>
 	<pre class="code_with-important">var oExample2Switcher = new Switcher({
 	items: {
-		selector: '#example-4-switcher .switcher-item',
+		selector: '#example-3-switcher .switcher-item',
 		<span class="code_important">actionElement</span>: '.pseudo'
 	}
 });</pre>

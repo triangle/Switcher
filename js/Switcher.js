@@ -27,7 +27,7 @@ Switcher.Basic.prototype = {
 		var oThis = this;
 		this.items = [];
 		
-		this.jItems = $(this.options.items.container + ' ' + this.options.items.selector) 
+		this.jItems = $(this.options.items.selector); 
 		
 		this.jItems.each(function(){
 			var newItem = new Switcher.SwitcherItem({
@@ -100,7 +100,6 @@ Switcher.Basic.prototype = {
 
 	defaultOptions: {
 		items: {
-			container: '',
 			selector: '.switcher-item',
 			selectedClass: 'selected',
 			valueSource: 'index',
@@ -172,8 +171,6 @@ Switcher.Targets = function(switcher, options){
 	this.options = options;
 	this.switcher = switcher;
 	
-	this.options.container = this.options.container || '';
-	
 	this.options.actionType = (typeof this.switcher.options.action == 'string' ? this.switcher.options.action : this.switcher.options.action.type);
 	
 	this._findItems(switcher.items);
@@ -181,15 +178,11 @@ Switcher.Targets = function(switcher, options){
 
 Switcher.Targets.prototype = {
 	_findItems: function(switcherItems){
-		if (this.options.selector) {
-			this.jItems = $(this.options.container + ' ' + this.options.selector);
-			this.oItems = {};
-			
-			for (var i = 0, len = switcherItems.length; i < len; i++){
-				this.oItems[switcherItems[i]._value] = this._getItemsByValue(switcherItems[i]._value);
-			}
-		} else {
-			this.jItems = $(this.options.container);
+		this.jItems = $(this.options.selector);
+		this.oItems = {};
+		
+		for (var i = 0, len = switcherItems.length; i < len; i++){
+			this.oItems[switcherItems[i]._value] = this._getItemsByValue(switcherItems[i]._value);
 		}
 	},
 	_getItemsByValue: function(value){

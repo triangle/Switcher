@@ -5,7 +5,7 @@
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 		<script type="text/javascript" src="js/Switcher.js"></script>
 		<style type="text/css">
-			.switcher-item_selected {
+			.switcher-item.selected {
 				font-weight: bold;
 			}
 			
@@ -15,7 +15,7 @@
 				cursor: pointer;
 			}
 			
-			.switcher-item_selected .pseudo {
+			.switcher-item.selected .pseudo {
 				border: none;
 				color: #000;
 				cursor: auto;
@@ -64,7 +64,7 @@
 		$(function(){
 			oExample1Switcher = new Switcher({
 				items: {
-					container: '#example-1-switcher',
+					selector: '#example-1-switcher .switcher-item',
 					valueSource: 'class',
 					valuePrefix: 'value_'
 				},
@@ -96,13 +96,11 @@
 		$(function(){
 			oExample2Switcher = new Switcher({
 				items: {
-					container: '#example-2-switcher',
+					selector: '#example-2-switcher .switcher-item',
 					valueSource: 'class',
 					valuePrefix: 'switch-to_'
 				},
-				targets: {
-					container: '#example-2-slave'
-				},
+				targets: '#example-2-slave',
 				action: 'setValueClass'
 			});
 		});
@@ -134,13 +132,12 @@
 		$(function(){
 			oExample3Switcher = new Switcher({
 				items: {
-					container: '#example-3-switcher',
+					selector: '#example-3-switcher .switcher-item',
 					valueSource: 'class',
 					valuePrefix: 'select_'
 				},
 				targets: {
-					container: '#example-3-slaves',
-					selector: '.slave-item',
+					selector: '#example-3-slaves .slave-item',
 					linkSource: 'class',
 					linkPrefix: 'slave_',
 				},
