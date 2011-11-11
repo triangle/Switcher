@@ -233,23 +233,16 @@ Switcher.Targets.prototype = {
 	},
 
 	updateItems: function(value, prevValue, switcher){
-		console.log(this);
-		
 		switch(true) {
 			case this.options.actionType == 'toggle':
-				this.actions.toggle.execute(value, prevValue);
-				break;
-				
 			case this.options.actionType == 'toggleClass':
-				if (prevValue !== undefined && this.switcher.options.action.addClass)
-					this.oItems[prevValue].removeClass(this.switcher.options.action.addClass);
-				if (prevValue !== undefined && this.switcher.options.action.removeClass)
-					this.oItems[prevValue].addClass(this.switcher.options.action.removeClass);
-
-				if (this.switcher.options.action.removeClass)
-					this.oItems[value].removeClass(this.switcher.options.action.removeClass);
-				if (this.switcher.options.action.addClass)
-					this.oItems[value].addClass(this.switcher.options.action.addClass);
+				var execute = this.actions[this.options.actionType].execute;
+				if (execute && typeof execute === 'function') {
+					execute(value, prevValue);
+				} else {
+					this.itemActionReverse(prevValue);
+					this.itemActionForward(value);
+				}
 				break;
 				
 			case this.options.actionType == 'setValueClass':
@@ -284,15 +277,24 @@ Switcher.Targets.prototype = {
 	
 	actions: {
 		toggle: {
-			execute: function(value, prevValue) {
-				this.actions.toogle.reverse(prevValue);
-				this.actions.toogle.forward(value);
-			},
 			reverse: function(value) {
 				this.oItems[value].hide();
 			},
 			forward: function(value) {
 				this.oItems[value].show();
+			}
+		},
+		
+		toggleClass: {
+			reverse: function(value) {
+				this.actions.toggleClass._helper(this.oItems[value], this.switcher.options.action.addClass, this.switcher.options.action.removeClass);
+			},
+			forward: function(value) {
+				this.actions.toggleClass._helper(this.oItems[value], this.switcher.options.action.removeClass, this.switcher.options.action.addClass);
+			},
+			_helper: function(items, removeClass, addClass) {
+				if (items && removeClass) items.removeClass(removeClass);
+				if (items && addClass)items.addClass(addClass);
 			}
 		}
 	}
