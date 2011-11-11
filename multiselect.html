@@ -121,5 +121,33 @@
 				});
 			});
 		</script>
+		
+		<h1>Multiselect example 4 (‘fade’ action)</h1>
+		<p>
+			<span id="example-4-switcher" class="switcher switcher_tab-style switcher_multiselect">
+				<span class="switcher-item selected"><span class="pseudo">Paragraph 1</span></span>
+				<span class="switcher-item selected"><span class="pseudo">Paragraph 2</span></span>
+				<span class="switcher-item selected"><span class="pseudo">Paragraph 3</span></span>
+				<span class="switcher-item selected"><span class="pseudo">Paragraph 4</span></span>
+			</span>
+		</p>
+		<div id="example-4">
+				<p>1. After a 3-year hiatus, The Drew Carey Show creator/showrunner Bruce Helford is making a splashy return to the business with Anger Management, the new Charlie Sheen sitcom which just sold to FX with an initial order for 10-episodes, which if successful will be followed by a 90-episode pickup.</p>
+				<p>2. Helford will write/run the series, based on the 2003 Adam Sandler-Jack Nicholson movie about a mild-mannered man (Sandler) ordered to attend group anger-management sessions led by a volatile therapist (Nicholson). But while the movie centered on Sandler’s character, the series will be about the therapist, played by Sheen, and his life.</p>
+				<p>3. “It’s all about Charlie’s life as a therapist who has as many or more problems than his patients,” Helford said. “He is a guy who has anger issues and wants to work on them.”</p>
+				<p>4. Like Sheen’s previous series, Two And A Half Men, where the lead character was tailored to reflect Sheen’s image at the time of the show’s creation – a bad-boy swinging bachelor – Anger Management too will incorporate elements from Sheen’s current life.</p>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			$(function(){
+				var oExample1Switcher = new Switcher({
+					items: '#example-4-switcher .switcher-item',
+					targets: '#example-4 p',
+					action: 'fade',
+					multiselect: true
+				});
+			});
+		</script>
 	</body>
 </html>

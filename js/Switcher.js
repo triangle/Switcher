@@ -1,5 +1,5 @@
 /*
- * Switcher v0.3
+ * Switcher v0.33
  * 
  * Requires jQuery
  */
@@ -247,12 +247,9 @@ Switcher.Targets.prototype = {
 				break;
 				
 			case this.options.actionType == 'fade':
-				if (this.oItems[prevValue]) {
-					switcher._lock();
-					this.oItems[prevValue].fadeOut(switcher.options.action.fadeDuration, switcher.options.action.fadeEasing, $.proxy(function(){
-						this.oItems[value].fadeIn(switcher.options.action.fadeDuration, switcher.options.action.fadeEasing, $.proxy(switcher, "_unlock"));
-					}, this));
-				}
+				$.proxy(this.actions.fade.reverse, this)(prevValue,	function(){
+					$.proxy(switcher.targets.actions.fade.forward, switcher.targets)(value);
+				});
 				break;
 		}
 	},
@@ -294,6 +291,21 @@ Switcher.Targets.prototype = {
 			forward: function(value) {
 				this.jItems.addClass((this.switcher.options.action.classPrefix || '') + value + (this.switcher.options.action.classSuffix || ''));
 			} 
+		},
+		
+		fade: {
+			reverse: function(value, callback) {
+				if (this.oItems[value]) {
+					this.switcher._lock();
+					this.oItems[value].fadeOut(this.switcher.options.action.fadeDuration, this.switcher.options.action.fadeEasing, callback || $.proxy(this.switcher, "_unlock"));
+				}
+			},
+			forward: function(value) {
+				if (this.oItems[value]) {
+					this.switcher._lock();
+					this.oItems[value].fadeIn(this.switcher.options.action.fadeDuration, this.switcher.options.action.fadeEasing, $.proxy(this.switcher, "_unlock"));
+				}
+			}
 		}
 	}
 }
