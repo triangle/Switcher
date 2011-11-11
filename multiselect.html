@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="css/examples.css" />
 	</head>
 	<body>
-		<h1>Multiselect example 1</h1>
+		<h1>Multiselect example 1 (‘toggle’ action)</h1>
 		<p>
 			<span id="example-1-switcher" class="switcher switcher_tab-style switcher_multiselect">
 				<span class="switcher-item selected"><span class="pseudo">Paragraph 1</span></span>
@@ -31,6 +31,45 @@
 					items: '#example-1-switcher .switcher-item',
 					targets: '#example-1-paragraph p',
 					action: 'toggle',
+					multiselect: true
+				});
+			});
+		</script>
+		
+		<style>
+			#example-2-targets .target-item {
+				padding: 2px 4px;
+			}
+			#example-2-targets .target-item_selected {
+				background: black;
+				color: #fff;
+			}
+		</style>
+		
+		<h1>Multiselect example 1 (‘toggleClass’ action)</h1>
+		<p>
+			<span id="example-2-switcher" class="switcher switcher_tab-style switcher_multiselect">
+				<span class="switcher-item"><span class="pseudo">Select item 1</span></span>
+				<span class="switcher-item"><span class="pseudo">Select item 2</span></span>
+				<span class="switcher-item"><span class="pseudo">Select item 3</span></span>
+			</span>
+		</p>
+		
+		<div id="example-2-targets">
+			<span class="target-item">Item 1</span>
+			<span class="target-item">Item 2</span>
+			<span class="target-item">Item 3</span>
+		</div>
+		
+		<script type="text/javascript">
+			$(function(){
+				oExample2Switcher = new Switcher({
+					items: '#example-2-switcher .switcher-item',
+					targets: '#example-2-targets .target-item',
+					action: {
+						type: 'toggleClass',
+						addClass: 'target-item_selected'
+					},
 					multiselect: true
 				});
 			});
