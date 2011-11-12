@@ -11,6 +11,10 @@ Switcher.Basic = function(options){
 	
 	if (this.options.targets) {
 		this.targets = new Switcher.Targets(this, this.options.targets)
+		
+		if (options.action) {
+			this._action = new Switcher.Action(this, options.action);
+		}
 	}
 }
 
@@ -54,8 +58,8 @@ Switcher.Basic.prototype = {
 		this.selectedValue = null
 	},
 	_invokeCallbacks: function(){
-		if (this.targets) {
-			this.targets.updateItems(this.selectedValue, this.prevSelectedValue, this);
+		if (this._action) {
+			this._action.execute(this);
 		}
 		
 		if (this.onSelect) {
@@ -84,13 +88,13 @@ Switcher.Basic.prototype = {
 			
 			if (item.isSelected()) {
 				item.deselect();
-				if (this.targets) {
-					this.targets.itemActionReverse(item._value);
+				if (this._action) {
+					this._action._reverse(item._value);
 				}
 			} else {
 				item.select();
 				if (this.targets) {
-					this.targets.itemActionForward(item._value);
+					this._action._forward(item._value);
 				}
 			}
 		}

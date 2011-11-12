@@ -5,7 +5,7 @@
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 		<script type="text/javascript" src="js/Switcher.js"></script>
 		<style type="text/css">
-			.switcher-item_selected {
+			.switcher-item_.selected {
 				font-weight: bold;
 			}
 			
@@ -15,7 +15,7 @@
 				cursor: pointer;
 			}
 			
-			.switcher-item_selected .pseudo {
+			.switcher-item.selected .pseudo {
 				border: none;
 				color: #000;
 				cursor: auto;
@@ -51,22 +51,18 @@
 		<div id="example-1_tab-2" class="tab">
 			<p>If Olivia Wilde was cast against type in "Butter," double that for "Method's" Keira Knightley, whose spanked bottom, exposed nipples, and borderline-psychotic tantrums provide filmgoers not inherently fascinated by psychoanalytic theory a reason to check out David Cronenberg's otherwise pretty academic Freud/Jung biopic.</p>
 		</div>
-	</div>	
+	</div>
+	
+	<div>
+		<p>Hubba bubba</p>
+	</div>
 
 	<script type="text/javascript">
 		$(function(){
 			oExample1Switcher = new Switcher({
-				items: {
-					container: '#example-1-switcher'
-				},
-				targets: {
-					selector: '#example-1-tabs .tab'
-				},
-				action: {
-					type: 'toggleTargetsClass',
-					addClass: 'not-hidden',
-					removeClass: 'hidden'
-				}
+				items: '#example-1-switcher .switcher-item',
+				targets: '#example-1-tabs .tab',
+				action: 'toggle'
 			});
 		});
 	</script>

@@ -1,5 +1,5 @@
 /*
- * Switcher v0.33
+ * Switcher v0.34
  * 
  * Requires jQuery
  */
@@ -19,6 +19,10 @@ Switcher.Basic = function(options){
 	
 	if (this.options.targets) {
 		this.targets = new Switcher.Targets(this, this.options.targets)
+		
+		if (options.action) {
+			this._action = new Switcher.Action(this, options.action);
+		}
 	}
 }
 
@@ -62,8 +66,8 @@ Switcher.Basic.prototype = {
 		this.selectedValue = null
 	},
 	_invokeCallbacks: function(){
-		if (this.targets) {
-			this.targets.updateItems(this.selectedValue, this.prevSelectedValue, this);
+		if (this._action) {
+			this._action.execute(this);
 		}
 		
 		if (this.onSelect) {
@@ -92,13 +96,13 @@ Switcher.Basic.prototype = {
 			
 			if (item.isSelected()) {
 				item.deselect();
-				if (this.targets) {
-					this.targets.itemActionReverse(item._value);
+				if (this._action) {
+					this._action._reverse(item._value);
 				}
 			} else {
 				item.select();
 				if (this.targets) {
-					this.targets.itemActionForward(item._value);
+					this._action._forward(item._value);
 				}
 			}
 		}
@@ -224,86 +228,118 @@ Switcher.Targets.prototype = {
 				return this.jItems.eq(value);
 				break;
 		}
+	}
+}
+Switcher.Action = function(switcher, options) {
+	var	action;
+	
+	switch (typeof options == 'string' ? options : options.type) {
+		case 'toggle':
+			action = new Switcher.Action.Toggle(options);
+			break;
+		case 'toggleClass':
+			action = new Switcher.Action.ToggleClass(options);
+			break;
+		case 'setValueClass':
+			action = new Switcher.Action.SetValueClass(options);
+			break;
+		case 'fade':
+			action = new Switcher.Action.Fade(options);
+			break;
+	}
+	$.extend(this, action);
+	
+	this.switcher = switcher;
+}
+Switcher.Action.prototype = {
+	execute: function() {
+		this.reverse(this.getTargets(this.switcher.prevSelectedValue), this.switcher.prevSelectedValue);
+		this.forward(this.getTargets(this.switcher.selectedValue), this.switcher.selectedValue);
 	},
+	getTargets: function(value) {
+		return this.switcher.targets.oItems[value];
+	},
+	_reverse: function(value) {
+		this.reverse(this.getTargets(value), value);
+	},
+	_forward: function(value) {
+		this.forward(this.getTargets(value), value);
+	}
+}
+Switcher.Action.Toggle = function() {}
 
-	updateItems: function(value, prevValue, switcher){
-		switch(true) {
-			case this.options.actionType == 'toggle':
-			case this.options.actionType == 'toggleClass':
-			case this.options.actionType == 'setValueClass':
-				var execute = this.actions[this.options.actionType].execute;
-				if (execute && typeof execute === 'function') {
-					execute(value, prevValue);
-				} else {
-					this.itemActionReverse(prevValue);
-					this.itemActionForward(value);
-				}
-				break;
-				
-			case this.options.actionType == 'fade':
-				$.proxy(this.actions.fade.reverse, this)(prevValue,	function(){
-					$.proxy(switcher.targets.actions.fade.forward, switcher.targets)(value);
-				});
-				break;
-		}
+Switcher.Action.Toggle.prototype = {
+	reverse: function(targets) {
+		targets && targets.hide();
 	},
-	
-	itemActionReverse: function(value) {
-		$.proxy(this.actions[this.options.actionType].reverse, this)(value);
-	},
-	itemActionForward: function(value) {
-		$.proxy(this.actions[this.options.actionType].forward, this)(value);
-	},
-	
-	actions: {
-		toggle: {
-			reverse: function(value) {
-				this.oItems[value].hide();
-			},
-			forward: function(value) {
-				this.oItems[value].show();
-			}
-		},
-		
-		toggleClass: {
-			reverse: function(value) {
-				this.actions.toggleClass._helper(this.oItems[value], this.switcher.options.action.addClass, this.switcher.options.action.removeClass);
-			},
-			forward: function(value) {
-				this.actions.toggleClass._helper(this.oItems[value], this.switcher.options.action.removeClass, this.switcher.options.action.addClass);
-			},
-			_helper: function(items, removeClass, addClass) {
-				if (items && removeClass) items.removeClass(removeClass);
-				if (items && addClass)items.addClass(addClass);
-			}
-		},
-		
-		setValueClass: {
-			reverse: function(value) {
-				this.jItems.removeClass((this.switcher.options.action.classPrefix || '') + value + (this.switcher.options.action.classSuffix || ''));
-			},
-			forward: function(value) {
-				this.jItems.addClass((this.switcher.options.action.classPrefix || '') + value + (this.switcher.options.action.classSuffix || ''));
-			} 
-		},
-		
-		fade: {
-			reverse: function(value, callback) {
-				if (this.oItems[value]) {
-					this.switcher._lock();
-					this.oItems[value].fadeOut(this.switcher.options.action.fadeDuration, this.switcher.options.action.fadeEasing, callback || $.proxy(this.switcher, "_unlock"));
-				}
-			},
-			forward: function(value) {
-				if (this.oItems[value]) {
-					this.switcher._lock();
-					this.oItems[value].fadeIn(this.switcher.options.action.fadeDuration, this.switcher.options.action.fadeEasing, $.proxy(this.switcher, "_unlock"));
-				}
-			}
-		}
+	forward: function(targets) {
+		targets && targets.show();
 	}
 }
 
+
+Switcher.Action.ToggleClass = function(options) {
+	this.addClass = options.addClass;
+	this.removeClass = options.removeClass;
+}
+
+Switcher.Action.ToggleClass.prototype = {
+	reverse: function(targets) {
+		this._helper(targets, this.addClass, this.removeClass);
+	},
+	forward: function(targets, value) {
+		this._helper(targets, this.removeClass, this.addClass);
+	},
+	_helper: function(items, removeClass, addClass) {
+		if (items && removeClass) items.removeClass(removeClass);
+		if (items && addClass)items.addClass(addClass);
+	}
+}
+
+
+Switcher.Action.SetValueClass = function(options){
+	this.classPrefix = options.classPrefix || '';
+	this.classSuffix = options.classSuffix || '';
+}
+
+Switcher.Action.SetValueClass.prototype = {
+	reverse: function(targets, value) {
+		targets && targets.removeClass(this.classPrefix + value + this.classSuffix);
+	},
+	forward: function(targets, value) {
+		targets && targets.addClass(this.classPrefix + value + this.classSuffix);
+	},
+	getTargets: function() {
+		return this.switcher.targets.jItems;
+	}
+}
+
+
+Switcher.Action.Fade = function(options) {
+	this.fadeEasing = options.fadeEasing;
+	this.fadeDuration = options.fadeDuration;
+}
+
+Switcher.Action.Fade.prototype = {
+	execute: function() {
+		var oThis = this;
+		this.reverse(this.getTargets(this.switcher.prevSelectedValue), null, function(){
+			oThis.forward(oThis.getTargets(oThis.switcher.selectedValue));
+		})
+	},
+	reverse: function(targets, value, callback) {
+		if (targets) {
+			this.switcher._lock();
+			targets.fadeOut(this.fadeDuration, this.fadeEasing, callback || $.proxy(this.switcher, "_unlock"));
+		}
+	},
+	forward: function(targets, value) {
+		if (targets) {
+			this.switcher._lock();
+			targets.fadeIn(this.fadeDuration, this.fadeEasing, $.proxy(this.switcher, "_unlock"));
+		}
+	}
+}
 Switcher.utils = {
 	extend: function extend(subClass, superClass) {
 	  var F = function() {};
