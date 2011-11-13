@@ -1,5 +1,5 @@
 /*
- * Switcher v0.34
+ * Switcher v0.35
  * 
  * Requires jQuery
  */
@@ -285,29 +285,27 @@ Switcher.Action.ToggleClass = function(options) {
 
 Switcher.Action.ToggleClass.prototype = {
 	reverse: function(targets) {
-		this._helper(targets, this.addClass, this.removeClass);
+		if (targets && this.addClass) targets.removeClass(this.addClass);
+		if (targets && this.removeClass) targets.addClass(this.removeClass);
 	},
 	forward: function(targets, value) {
-		this._helper(targets, this.removeClass, this.addClass);
-	},
-	_helper: function(items, removeClass, addClass) {
-		if (items && removeClass) items.removeClass(removeClass);
-		if (items && addClass)items.addClass(addClass);
+		if (targets && this.removeClass) targets.removeClass(this.removeClass);
+		if (targets && this.addClass) targets.addClass(this.addClass);
 	}
 }
 
 
 Switcher.Action.SetValueClass = function(options){
-	this.classPrefix = options.classPrefix || '';
-	this.classSuffix = options.classSuffix || '';
+	this.prefix = options.prefix || '';
+	this.suffix = options.suffix || '';
 }
 
 Switcher.Action.SetValueClass.prototype = {
 	reverse: function(targets, value) {
-		targets && targets.removeClass(this.classPrefix + value + this.classSuffix);
+		targets && targets.removeClass(this.prefix + value + this.suffix);
 	},
 	forward: function(targets, value) {
-		targets && targets.addClass(this.classPrefix + value + this.classSuffix);
+		targets && targets.addClass(this.prefix + value + this.suffix);
 	},
 	getTargets: function() {
 		return this.switcher.targets.jItems;
@@ -316,8 +314,8 @@ Switcher.Action.SetValueClass.prototype = {
 
 
 Switcher.Action.Fade = function(options) {
-	this.fadeEasing = options.fadeEasing;
-	this.fadeDuration = options.fadeDuration;
+	this.easing = options.fadeEasing;
+	this.duration = options.fadeDuration;
 }
 
 Switcher.Action.Fade.prototype = {
@@ -330,13 +328,13 @@ Switcher.Action.Fade.prototype = {
 	reverse: function(targets, value, callback) {
 		if (targets) {
 			this.switcher._lock();
-			targets.fadeOut(this.fadeDuration, this.fadeEasing, callback || $.proxy(this.switcher, "_unlock"));
+			targets.fadeOut(this.duration, this.easing, callback || $.proxy(this.switcher, "_unlock"));
 		}
 	},
 	forward: function(targets, value) {
 		if (targets) {
 			this.switcher._lock();
-			targets.fadeIn(this.fadeDuration, this.fadeEasing, $.proxy(this.switcher, "_unlock"));
+			targets.fadeIn(this.duration, this.easing, $.proxy(this.switcher, "_unlock"));
 		}
 	}
 }
