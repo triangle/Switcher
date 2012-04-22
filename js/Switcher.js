@@ -1,5 +1,5 @@
 /*
- * Switcher v0.35
+ * Switcher v0.36
  * 
  * Requires jQuery
  */
@@ -296,16 +296,15 @@ Switcher.Action.ToggleClass.prototype = {
 
 
 Switcher.Action.SetValueClass = function(options){
-	this.prefix = options.prefix || '';
-	this.suffix = options.suffix || '';
+	this.classTemplate = options.classTemplate || '%'; 
 }
 
 Switcher.Action.SetValueClass.prototype = {
 	reverse: function(targets, value) {
-		targets && targets.removeClass(this.prefix + value + this.suffix);
+		targets && targets.removeClass(this.classTemplate.replace(/%/g, value));
 	},
 	forward: function(targets, value) {
-		targets && targets.addClass(this.prefix + value + this.suffix);
+		targets && targets.addClass(this.classTemplate.replace(/%/g, value));
 	},
 	getTargets: function() {
 		return this.switcher.targets.jItems;
