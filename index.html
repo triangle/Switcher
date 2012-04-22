@@ -164,11 +164,10 @@
 				items: {
 					selector: '#example-3-switcher .switcher-item',
 					valueSource: 'class',
-					valuePrefix: 'v_'
+					valueTemplate: 'v_%'
 				},
 				targets: {
-					container: '#property-boxes',
-					selector: '.property-box',
+					selector: '#property-boxes .property-box',
 					linkSource: 'class'
 				},
 				action: 'toggle'

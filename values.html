@@ -43,9 +43,9 @@
 		$(function(){
 			oExample1Switcher = new Switcher({
 				items: {
-					container: '#example-1-switcher',
+					selector: '#example-1-switcher .switcher-item',
 					valueSource: 'class',
-					valuePrefix: 'value_'
+					valueTemplate: 'value_%'
 				},
 				onSelect: function(){
 					$("#example-1-value-display").html('switcher\'s value is ' + this.selectedValue);
@@ -74,7 +74,7 @@
 		$(function(){
 			oExample2Switcher = new Switcher({
 				items: {
-					container: '#example-2-switcher',
+					selector: '#example-2-switcher .switcher-item',
 					valueAttribute: 'my-custom-value'
 				},
 				onSelect: function(){
@@ -113,7 +113,7 @@
 		$(function(){
 			oExample3Switcher = new Switcher({
 				items: {
-					container: '#example-3-switcher'
+					selector: '#example-3-switcher .switcher-item'
 				},
 				onSelect: function(){
 					$("#example-3-value-display").html('switcher\'s value is ' + this.selectedValue);
@@ -142,9 +142,9 @@
 		$(function(){
 			oExample4Switcher = new Switcher({
 				items: {
-					container: '#example-4-switcher',
+					selector: '#example-4-switcher .switcher-item',
 					valueSource: 'id',
-					valuePrefix: 'tab-'
+					valueTemplate: 'tab-%'
 				},
 				onSelect: function(){
 					$("#example-4-value-display").html('switcher\'s value is ' + this.selectedValue);
