@@ -17,8 +17,7 @@ Switcher.SwitcherItem.prototype = {
 				this._value = Switcher.utils.getValueFromAttribute(
 					this._element,
 					this.options.valueAttribute || this.options.valueSource,
-					this.options.valuePrefix,
-					this.options.valueSuffix
+					this.options.valueTemplate || '%'
 				);
 				break;
 			

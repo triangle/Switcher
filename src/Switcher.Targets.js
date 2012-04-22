@@ -5,6 +5,7 @@ Switcher.Targets = function(switcher, options){
 		}
 	}
 	this.options = options;
+	this.options.linkTemplate = this.options.linkTemplate || '%'; 
 	this.switcher = switcher;
 	
 	this.options.actionType = (typeof this.switcher.options.action == 'string' ? this.switcher.options.action : this.switcher.options.action.type);
@@ -22,7 +23,7 @@ Switcher.Targets.prototype = {
 		}
 	},
 	_getItemsByValue: function(value){
-		var selector = (this.options.linkPrefix || '') + value + (this.options.linkSuffix || '');
+		var selector = this.options.linkTemplate.replace(/%/g, value);
 
 		switch (true) {
 			case this.options.linkSource == 'id' || this.options.linkAttribute == 'id':

@@ -66,7 +66,7 @@
 				items: {
 					selector: '#example-1-switcher .switcher-item',
 					valueSource: 'class',
-					valuePrefix: 'value_'
+					valueTemplate: 'value_%'
 				},
 				onSelect: function(){
 					$("#example-1-value-display").html('switcher\'s value is ' + this.selectedValue);
@@ -98,7 +98,7 @@
 				items: {
 					selector: '#example-2-switcher .switcher-item',
 					valueSource: 'class',
-					valuePrefix: 'switch-to_'
+					valueTemplate: 'switch-to_%'
 				},
 				targets: '#example-2-slave',
 				action: 'setValueClass'
@@ -134,12 +134,12 @@
 				items: {
 					selector: '#example-3-switcher .switcher-item',
 					valueSource: 'class',
-					valuePrefix: 'select_'
+					valueTemplate: 'select_%'
 				},
 				targets: {
 					selector: '#example-3-slaves .slave-item',
 					linkSource: 'class',
-					linkPrefix: 'slave_',
+					linkTemplate: 'slave_%'
 				},
 				action: {
 					type: 'toggleClass',

@@ -1,5 +1,5 @@
 /*
- * Switcher v0.36
+ * Switcher v0.4
  * 
  * Requires jQuery
  */
@@ -148,8 +148,7 @@ Switcher.SwitcherItem.prototype = {
 				this._value = Switcher.utils.getValueFromAttribute(
 					this._element,
 					this.options.valueAttribute || this.options.valueSource,
-					this.options.valuePrefix,
-					this.options.valueSuffix
+					this.options.valueTemplate || '%'
 				);
 				break;
 			
@@ -191,6 +190,7 @@ Switcher.Targets = function(switcher, options){
 		}
 	}
 	this.options = options;
+	this.options.linkTemplate = this.options.linkTemplate || '%'; 
 	this.switcher = switcher;
 	
 	this.options.actionType = (typeof this.switcher.options.action == 'string' ? this.switcher.options.action : this.switcher.options.action.type);
@@ -208,7 +208,7 @@ Switcher.Targets.prototype = {
 		}
 	},
 	_getItemsByValue: function(value){
-		var selector = (this.options.linkPrefix || '') + value + (this.options.linkSuffix || '');
+		var selector = this.options.linkTemplate.replace(/%/g, value);
 
 		switch (true) {
 			case this.options.linkSource == 'id' || this.options.linkAttribute == 'id':
@@ -349,21 +349,21 @@ Switcher.utils = {
 	    superClass.prototype.constructor = superClass;
 	  }
 	},
-	getValueFromAttribute: function(el, sAttrName, prefix, suffix) {
+	getValueFromAttribute: function(el, sAttrName, valueTemplate) {
 		var el = $(el);
 		if(el.length){
-			var aAttrValues = [];
+			var
+				aAttrValues = [],
+				rValue = new RegExp(valueTemplate.replace('%', '(.+)'));
 			if (sAttrName != 'id'){
 				aAttrValues = el.attr(sAttrName).split(' ')
 			} else {
 				aAttrValues.push(el.attr(sAttrName));
 			}
 			for (var i = 0, len = aAttrValues.length; i < len; i++) {
-				if (
-					(!prefix || prefix && aAttrValues[i].indexOf(prefix) == 0)
-					&& (!suffix || suffix && aAttrValues[i].substr(aAttrValues[i].length - suffix.length) == suffix)
-				){
-					return aAttrValues[i].slice(prefix ? prefix.length : 0, aAttrValues[i].length - (suffix ? suffix.length : 0));
+				var m = rValue.exec(aAttrValues[i]);
+				if (m){
+					return m[1];
 				}
 			}
 		}
