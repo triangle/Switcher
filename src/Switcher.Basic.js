@@ -112,7 +112,6 @@ Switcher.Basic.prototype = {
 
 	defaultOptions: {
 		items: {
-			selector: '.switcher-item',
 			selectedClass: 'selected',
 			valueSource: 'index',
 			event: 'click'
