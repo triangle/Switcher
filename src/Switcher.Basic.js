@@ -74,16 +74,18 @@ Switcher.Basic.prototype = {
 	},
 	
 	action: function(item){
-		if (!this.options.multiselect) {
-			if (this.isLocked || item.isSelected()) return;
+		if (!(this.options.multiselect || item.isSelected() && this.options.multistate)) {
+			if (this.isLocked || (item.isSelected() && !this.options.multistate)) return;
 			
-			this.deselectSelectedItem();
-			
-			item.select();
-			this._setSelectedItem(item);
-			
-			this._invokeCallbacks();
-		} else {
+			if (!(this.options.multistate && item.isSelected())){
+				this.deselectSelectedItem();
+				
+				item.select();
+				this._setSelectedItem(item);
+				
+				this._invokeCallbacks();
+			}
+		} else if (this.options.multiselect || this.options.multistate) {
 			if (this.isLocked) return;
 			
 			if (item.isSelected()) {
@@ -92,9 +94,11 @@ Switcher.Basic.prototype = {
 					this._action._reverse(item._value);
 				}
 			} else {
-				item.select();
-				if (this.targets) {
-					this._action._forward(item._value);
+				if (!this.options.multistate) {
+					item.select();
+					if (this.targets) {
+						this._action._forward(item._value);
+					}
 				}
 			}
 		}
