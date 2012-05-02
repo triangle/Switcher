@@ -13,16 +13,21 @@ Switcher.Action.Toggle.prototype = {
 Switcher.Action.ToggleClass = function(options) {
 	this.addClass = options.addClass;
 	this.removeClass = options.removeClass;
+	
+	this.forwardAdd = (typeof options.forwardAdd !== 'undefined') ? options.forwardAdd : true;
+	this.forwardRemove = (typeof options.forwardRemove !== 'undefined') ? options.forwardRemove : true;
+	this.reverseAdd = (typeof options.reverseAdd !== 'undefined') ? options.reverseAdd : true;
+	this.reverseRemove = (typeof options.reverseRemove !== 'undefined') ? options.reverseRemove : true;
 }
 
 Switcher.Action.ToggleClass.prototype = {
 	reverse: function(targets) {
-		if (targets && this.addClass) targets.removeClass(this.addClass);
-		if (targets && this.removeClass) targets.addClass(this.removeClass);
+		if (targets && this.reverseRemove && this.addClass) targets.removeClass(this.addClass);
+		if (targets && this.reverseAdd && this.removeClass) targets.addClass(this.removeClass);
 	},
 	forward: function(targets, value) {
-		if (targets && this.removeClass) targets.removeClass(this.removeClass);
-		if (targets && this.addClass) targets.addClass(this.addClass);
+		if (targets && this.forwardRemove && this.removeClass) targets.removeClass(this.removeClass);
+		if (targets && this.forwardAdd && this.addClass) targets.addClass(this.addClass);
 	}
 }
 
