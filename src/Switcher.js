@@ -1,5 +1,5 @@
 /*
- * Switcher v0.43
+ * Switcher v0.44
  * 
  * Requires jQuery
  */

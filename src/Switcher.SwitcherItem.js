@@ -3,9 +3,12 @@ Switcher.SwitcherItem = function(options){
 	
 	this.options = options.itemsOptions;
 	
-	this._setValue(options.itemIndex);
-	this._attachEvents(options.switcher);
+	this._eventElement = this._element;
+	if (this.options.eventElement) {
+		this._eventElement = this._element.find(this.options.eventElement);
+	}
 	
+	this._setValue(options.itemIndex);
 }
 
 Switcher.SwitcherItem.prototype = {
@@ -27,21 +30,6 @@ Switcher.SwitcherItem.prototype = {
 				this._value = itemIndex;
 				break;
 		}
-	},
-	_attachEvents: function(switcher){
-		var eventElement = this._element;
-		if (this.options.eventElement) {
-			eventElement = this._element.find(this.options.eventElement);
-		}
-		eventElement[this.options.event](
-			$.proxy(function(e){
-				console.log(this);
-				if (switcher.options.action === undefined || switcher.options.action.preventDefault != false) {
-					e.preventDefault();
-				}
-				switcher.action(this);
-			}, this)
-		);
 	},
 
 	select: function(){

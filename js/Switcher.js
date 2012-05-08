@@ -1,5 +1,5 @@
 /*
- * Switcher v0.43
+ * Switcher v0.44
  * 
  * Requires jQuery
  */
@@ -14,7 +14,7 @@ Switcher.Basic = function(options){
 	}
 	this.options = $.extend(true, {}, this.defaultOptions, options); 
 	
-	this._findItems();
+	this._initItems();
 	this._attachCallback();
 	
 	if (this.options.targets) {
@@ -27,7 +27,7 @@ Switcher.Basic = function(options){
 }
 
 Switcher.Basic.prototype = {
-	_findItems: function(){
+	_initItems: function(){
 		var oThis = this;
 		this.items = [];
 		
@@ -36,16 +36,27 @@ Switcher.Basic.prototype = {
 		this.jItems.each(function(){
 			var newItem = new Switcher.SwitcherItem({
 				element: this,
-				itemIndex: oThis.items.length,
-				switcher: oThis,
-				itemsOptions: oThis.options.items
+				itemsOptions: oThis.options.items,
+				itemIndex: oThis.items.length
 			});
 			oThis.items.push(newItem);
+			
+			newItem._eventElement[oThis.options.items.event](
+				$.proxy(function(e){
+					this._itemCallback(e, newItem);
+				}, oThis)
+			);
 			
 			if (!oThis.selectedItem && newItem.isSelected()){
 				oThis.selectedItem = newItem;
 			} 
 		});
+	},
+	_itemCallback: function(e, item){
+		if (typeof this.options.action === 'undefined' || this.options.action.preventDefault != false) {
+			e.preventDefault();
+		}
+		this.action(item);
 	},
 	_attachCallback: function(){
 		if (this.options.onSelect && typeof this.options.onSelect === 'function') {
@@ -138,9 +149,12 @@ Switcher.SwitcherItem = function(options){
 	
 	this.options = options.itemsOptions;
 	
-	this._setValue(options.itemIndex);
-	this._attachEvents(options.switcher);
+	this._eventElement = this._element;
+	if (this.options.eventElement) {
+		this._eventElement = this._element.find(this.options.eventElement);
+	}
 	
+	this._setValue(options.itemIndex);
 }
 
 Switcher.SwitcherItem.prototype = {
@@ -162,21 +176,6 @@ Switcher.SwitcherItem.prototype = {
 				this._value = itemIndex;
 				break;
 		}
-	},
-	_attachEvents: function(switcher){
-		var eventElement = this._element;
-		if (this.options.eventElement) {
-			eventElement = this._element.find(this.options.eventElement);
-		}
-		eventElement[this.options.event](
-			$.proxy(function(e){
-				console.log(this);
-				if (switcher.options.action === undefined || switcher.options.action.preventDefault != false) {
-					e.preventDefault();
-				}
-				switcher.action(this);
-			}, this)
-		);
 	},
 
 	select: function(){
