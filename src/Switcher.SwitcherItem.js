@@ -3,13 +3,15 @@ Switcher.SwitcherItem = function(options){
 	
 	this.options = options.itemsOptions;
 	
-	this._setValue(options.switcher);
+	this._setValue(options.itemIndex);
 	this._attachEvents(options.switcher);
 	
 }
 
 Switcher.SwitcherItem.prototype = {
-	_setValue: function(switcher){
+	_setValue: function(itemIndex){
+		this._index = itemIndex;
+		
 		switch (true) {
 			case this.options.valueSource == 'id' || this.options.valueAttribute == 'id':
 			case this.options.valueSource == 'class' || this.options.valueAttribute == 'class':
@@ -22,7 +24,7 @@ Switcher.SwitcherItem.prototype = {
 				break;
 			
 			case this.options.valueSource == 'index':
-				this._value = switcher.items.length;
+				this._value = itemIndex;
 				break;
 		}
 	},
@@ -33,6 +35,7 @@ Switcher.SwitcherItem.prototype = {
 		}
 		eventElement[this.options.event](
 			$.proxy(function(e){
+				console.log(this);
 				if (switcher.options.action === undefined || switcher.options.action.preventDefault != false) {
 					e.preventDefault();
 				}

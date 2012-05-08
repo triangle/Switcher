@@ -28,6 +28,7 @@ Switcher.Basic.prototype = {
 		this.jItems.each(function(){
 			var newItem = new Switcher.SwitcherItem({
 				element: this,
+				itemIndex: oThis.items.length,
 				switcher: oThis,
 				itemsOptions: oThis.options.items
 			});
