@@ -1,5 +1,5 @@
 /*
- * Switcher v0.46
+ * Switcher v0.47
  * 
  * Requires jQuery
  */
@@ -291,23 +291,20 @@ Switcher.Action.Toggle.prototype = {
 
 
 Switcher.Action.ToggleClass = function(options) {
-	this.addClass = options.addClass;
-	this.removeClass = options.removeClass;
-	
-	this.forwardAdd = (typeof options.forwardAdd !== 'undefined') ? options.forwardAdd : true;
-	this.forwardRemove = (typeof options.forwardRemove !== 'undefined') ? options.forwardRemove : true;
-	this.reverseAdd = (typeof options.reverseAdd !== 'undefined') ? options.reverseAdd : true;
-	this.reverseRemove = (typeof options.reverseRemove !== 'undefined') ? options.reverseRemove : true;
+	this.forwardAddClass = options.addClass || options.forwardAddClass;
+	this.forwardRemoveClass = options.removeClass || options.forwardRemoveClass;
+	this.reverseAddClass = options.removeClass || options.reverseAddClass;
+	this.reverseRemoveClass = options.addClass || options.reverseRemoveClass;
 }
 
 Switcher.Action.ToggleClass.prototype = {
 	reverse: function(targets) {
-		if (targets && this.reverseRemove && this.addClass) targets.removeClass(this.addClass);
-		if (targets && this.reverseAdd && this.removeClass) targets.addClass(this.removeClass);
+		if (targets && this.reverseRemoveClass) targets.removeClass(this.reverseRemoveClass);
+		if (targets && this.reverseAddClass) targets.addClass(this.reverseAddClass);
 	},
 	forward: function(targets, value) {
-		if (targets && this.forwardRemove && this.removeClass) targets.removeClass(this.removeClass);
-		if (targets && this.forwardAdd && this.addClass) targets.addClass(this.addClass);
+		if (targets && this.forwardRemoveClass) targets.removeClass(this.forwardRemoveClass);
+		if (targets && this.forwardAddClass) targets.addClass(this.forwardAddClass);
 	}
 }
 
