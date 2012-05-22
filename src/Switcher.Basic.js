@@ -16,6 +16,8 @@ Switcher.Basic = function(options){
 			this._action = new Switcher.Action(this, options.action);
 		}
 	}
+	
+	this._processInitValue();
 }
 
 Switcher.Basic.prototype = {
@@ -81,6 +83,17 @@ Switcher.Basic.prototype = {
 		this.isLocked = false;
 	},
 	
+	_processInitValue: function(){
+		if(typeof this.options.initValue !== 'undefined') {
+			for(var i = 0, len = this.items.length; i < len; i++){
+				if (this.options.initValue == this.options.initValueTemplate.replace('%', this.items[i]._value)){
+					this.items[i]._eventElement[this.options.items.event]();
+					break;
+				}
+			}
+		}
+	},
+	
 	action: function(item){
 		if (!(this.options.multiselect || item.isSelected() && this.options.multistate)) {
 			if (this.isLocked || (item.isSelected() && !this.options.multistate)) return;
@@ -132,6 +145,7 @@ Switcher.Basic.prototype = {
 			valueSource: 'index',
 			event: 'click'
 		},
-		multiselect: false
+		multiselect: false,
+		initValueTemplate: '%'
 	}
 }
