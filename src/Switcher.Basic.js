@@ -69,11 +69,7 @@ Switcher.Basic.prototype = {
 		this.selectedItem  = null;
 		this.selectedValue = null
 	},
-	_invokeCallbacks: function(){
-		if (this._action) {
-			this._action.execute(this);
-		}
-		
+	_callback: function(){
 		if (this.onSelect) {
 			this.onSelect();
 		}		
@@ -95,7 +91,9 @@ Switcher.Basic.prototype = {
 				item.select();
 				this._setSelectedItem(item);
 				
-				this._invokeCallbacks();
+				if (this._action) {
+					this._action.execute(this);
+				}
 			}
 		} else if (this.options.multiselect || this.options.multistate) {
 			if (this.isLocked) return;
@@ -114,6 +112,8 @@ Switcher.Basic.prototype = {
 				}
 			}
 		}
+		
+		this._callback();
 	},
 	deselectSelectedItem: function(){
 		if (this.selectedItem) {
