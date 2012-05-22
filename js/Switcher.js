@@ -1,5 +1,5 @@
 /*
- * Switcher v0.44
+ * Switcher v0.45
  * 
  * Requires jQuery
  */
@@ -180,9 +180,15 @@ Switcher.SwitcherItem.prototype = {
 
 	select: function(){
 		this._element.addClass(this.options.selectedClass);
+		if(this.options.deselectedClass){
+			this._element.removeClass(this.options.deselectedClass);
+		}
 	},
 	deselect: function(){
 		this._element.removeClass(this.options.selectedClass);
+		if(this.options.deselectedClass){
+			this._element.addClass(this.options.deselectedClass);
+		}
 	},
 
 	isSelected: function(){
