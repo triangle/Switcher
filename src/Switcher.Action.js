@@ -27,8 +27,8 @@ Switcher.Action.prototype = {
 	getTargets: function(value) {
 		return this.switcher.targets.oItems[value];
 	},
-	_reverse: function(value) {
-		this.reverse(this.getTargets(value), value);
+	_reverse: function(value, quick) {
+		this.reverse(this.getTargets(value), value, quick);
 	},
 	_forward: function(value) {
 		this.forward(this.getTargets(value), value);

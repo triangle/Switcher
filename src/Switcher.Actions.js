@@ -54,14 +54,18 @@ Switcher.Action.Fade = function(options) {
 Switcher.Action.Fade.prototype = {
 	execute: function() {
 		var oThis = this;
-		this.reverse(this.getTargets(this.switcher.prevSelectedValue), null, function(){
+		this.reverse(this.getTargets(this.switcher.prevSelectedValue), null, false, function(){
 			oThis.forward(oThis.getTargets(oThis.switcher.selectedValue));
 		})
 	},
-	reverse: function(targets, value, callback) {
+	reverse: function(targets, value, quick, callback) {
 		if (targets) {
-			this.switcher._lock();
-			targets.fadeOut(this.duration, this.easing, callback || $.proxy(this.switcher, "_unlock"));
+			if (!quick) {
+				this.switcher._lock();
+				targets.fadeOut(this.duration, this.easing, callback || $.proxy(this.switcher, "_unlock"));
+			} else {
+				targets.hide();
+			}
 		}
 	},
 	forward: function(targets, value) {

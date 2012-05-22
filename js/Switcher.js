@@ -1,5 +1,5 @@
 /*
- * Switcher v0.48
+ * Switcher v0.5
  * 
  * Requires jQuery
  */
@@ -49,8 +49,9 @@ Switcher.Basic.prototype = {
 				}, oThis)
 			);
 			
-			if (!oThis.selectedItem && newItem.isSelected()){
-				oThis.selectedItem = newItem;
+			if (!oThis.selectedItem && newItem.isSelected() && typeof oThis.options.initValue === 'undefined'){
+				oThis.options.initValue = newItem._value;
+				oThis._setSelectedItem(newItem);
 			} 
 		});
 	},
@@ -96,7 +97,19 @@ Switcher.Basic.prototype = {
 			for(var i = 0, len = this.items.length; i < len; i++){
 				if (this.options.initValue == this.options.initValueTemplate.replace('%', this.items[i]._value)){
 					this.items[i]._eventElement[this.options.items.event]();
-					break;
+					this._initedValue = this.items[i]._value;
+					
+					if (!this.options.multiselect) break;
+				} else {
+					this.items[i].deselect();
+				}
+			}
+			
+			if (typeof this._initedValue !== 'undefined' && this.targets) {
+				for (value in this.targets.oItems) {
+					if (this.targets.oItems.hasOwnProperty(value) && value != this._initedValue) {
+						this._action._reverse(value, true);
+					}
 				}
 			}
 		}
@@ -285,8 +298,8 @@ Switcher.Action.prototype = {
 	getTargets: function(value) {
 		return this.switcher.targets.oItems[value];
 	},
-	_reverse: function(value) {
-		this.reverse(this.getTargets(value), value);
+	_reverse: function(value, quick) {
+		this.reverse(this.getTargets(value), value, quick);
 	},
 	_forward: function(value) {
 		this.forward(this.getTargets(value), value);
@@ -348,14 +361,18 @@ Switcher.Action.Fade = function(options) {
 Switcher.Action.Fade.prototype = {
 	execute: function() {
 		var oThis = this;
-		this.reverse(this.getTargets(this.switcher.prevSelectedValue), null, function(){
+		this.reverse(this.getTargets(this.switcher.prevSelectedValue), null, false, function(){
 			oThis.forward(oThis.getTargets(oThis.switcher.selectedValue));
 		})
 	},
-	reverse: function(targets, value, callback) {
+	reverse: function(targets, value, quick, callback) {
 		if (targets) {
-			this.switcher._lock();
-			targets.fadeOut(this.duration, this.easing, callback || $.proxy(this.switcher, "_unlock"));
+			if (!quick) {
+				this.switcher._lock();
+				targets.fadeOut(this.duration, this.easing, callback || $.proxy(this.switcher, "_unlock"));
+			} else {
+				targets.hide();
+			}
 		}
 	},
 	forward: function(targets, value) {
