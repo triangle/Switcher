@@ -1,5 +1,5 @@
 /*
- * Switcher v0.5
+ * Switcher v0.51
  * 
  * Requires jQuery
  */
@@ -96,7 +96,7 @@ Switcher.Basic.prototype = {
 		if(typeof this.options.initValue !== 'undefined') {
 			for(var i = 0, len = this.items.length; i < len; i++){
 				if (this.options.initValue == this.options.initValueTemplate.replace('%', this.items[i]._value)){
-					this.items[i]._eventElement[this.options.items.event]();
+					this.items[i]._eventElement.eq(0)[this.options.items.event]();
 					this._initedValue = this.items[i]._value;
 					
 					if (!this.options.multiselect) break;
