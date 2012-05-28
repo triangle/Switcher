@@ -1,5 +1,5 @@
 /*
- * Switcher v0.51
+ * Switcher v0.52
  * 
  * Requires jQuery
  */
@@ -58,6 +58,9 @@ Switcher.Basic.prototype = {
 	_itemCallback: function(e, item){
 		if (typeof this.options.action === 'undefined' || this.options.action.preventDefault != false) {
 			e.preventDefault();
+		}
+		if (this.options.stopPropagation != false) {
+			e.stopPropagation();
 		}
 		this.action(item);
 	},
@@ -167,7 +170,8 @@ Switcher.Basic.prototype = {
 			event: 'click'
 		},
 		multiselect: false,
-		initValueTemplate: '%'
+		initValueTemplate: '%',
+		stopPropagation: false
 	}
 }
 

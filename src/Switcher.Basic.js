@@ -51,6 +51,9 @@ Switcher.Basic.prototype = {
 		if (typeof this.options.action === 'undefined' || this.options.action.preventDefault != false) {
 			e.preventDefault();
 		}
+		if (this.options.stopPropagation != false) {
+			e.stopPropagation();
+		}
 		this.action(item);
 	},
 	_attachCallback: function(){
@@ -159,6 +162,7 @@ Switcher.Basic.prototype = {
 			event: 'click'
 		},
 		multiselect: false,
-		initValueTemplate: '%'
+		initValueTemplate: '%',
+		stopPropagation: false
 	}
 }
