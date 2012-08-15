@@ -75,3 +75,34 @@ Switcher.Action.Fade.prototype = {
 		}
 	}
 }
+
+
+Switcher.Action.Slide = function(options) {
+	this.easing = options.fadeEasing;
+	this.duration = options.fadeDuration;
+}
+
+Switcher.Action.Slide.prototype = {
+	execute: function() {
+		var oThis = this;
+		this.reverse(this.getTargets(this.switcher.prevSelectedValue), null, false, function(){
+			oThis.forward(oThis.getTargets(oThis.switcher.selectedValue));
+		})
+	},
+	reverse: function(targets, value, quick, callback) {
+		if (targets) {
+			if (!quick) {
+				this.switcher._lock();
+				targets.slideUp(this.duration, this.easing, callback || $.proxy(this.switcher, "_unlock"));
+			} else {
+				targets.hide();
+			}
+		}
+	},
+	forward: function(targets, value) {
+		if (targets) {
+			this.switcher._lock();
+			targets.slideDown(this.duration, this.easing, $.proxy(this.switcher, "_unlock"));
+		}
+	}
+}

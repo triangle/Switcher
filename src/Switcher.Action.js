@@ -14,6 +14,9 @@ Switcher.Action = function(switcher, options) {
 		case 'fade':
 			action = new Switcher.Action.Fade(options);
 			break;
+		case 'slide':
+			action = new Switcher.Action.Slide(options);
+			break;
 	}
 	$.extend(this, action);
 	
